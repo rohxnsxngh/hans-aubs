@@ -23,11 +23,11 @@ function init() {
     1,
     20000
   );
-  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), -1*Math.PI/4);
+  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), (-1 * Math.PI) / 4);
   camera.position.set(-100, 10, 100);
 
   //fog
-  const color = 0x302D36; // change color
+  const color = 0x302d36; // change color
   const near = 100;
   const far = 1000;
   scene.fog = new THREE.Fog(color, near, far);
@@ -135,21 +135,35 @@ function init() {
   }
 
   updateSun();
-  spaceBoi(scene);
+  // spaceBoi(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
   //curve
   createCurve(scene);
-//   homePage(scene);
-//   aboutPage(scene);
-//   expPage(scene);
-//   contactPage(scene);
-//   createKeys(scene);
-//   createWelcome(scene);
-//   createAmbientSound(camera);
-//   createBackground(scene); // pretty detailed background
+
+  const geometry = new THREE.BufferGeometry();
+  const vertices = [];
+  const sprite = new THREE.TextureLoader().load( '/sprites.png' );
+
+  for ( let i = 0; i < 10000; i ++ ) {
+
+    const x = 2000 * Math.random() - 1000;
+    const y = 2000 * Math.random() - 1000;
+    const z = 2000 * Math.random() - 1000;
+
+    vertices.push( x, y, z );
+
+  }
+
+  geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+  const material = new THREE.PointsMaterial( { size: 20, sizeAttenuation: true, alphaTest: 0.5, map: sprite, transparent: true, color: 0x000000 } );
+  // material.color.setHSL( 1.0, 0.3, 0.7 );
+
+  const particles = new THREE.Points( geometry, material );
+  scene.add( particles );
 
   //Controls
   //First Person Controls
@@ -202,4 +216,3 @@ console.log("Scene Polycount:", renderer.info.render.triangles);
 console.log("Active Drawcalls:", renderer.info.render.calls);
 console.log("Textures in Memory", renderer.info.memory.textures);
 console.log("Geometries in Memory", renderer.info.memory.geometries);
-
