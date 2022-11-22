@@ -2,12 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Rohan Singh</title>
+    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
+    <div class="progress-bar-container">
+      <label for="progress-bar">Loading...</label>
+      <!-- <progress id="progress-bar" value="0" max="100"></progress> -->
+      <div id="loader-circular"></div>
+    </div>
+    <div id="container"></div>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/index.js"></script>
   </body>
 </html>
