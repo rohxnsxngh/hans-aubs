@@ -3,6 +3,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls.js";
 import { Water } from "three/examples/jsm/objects/Water.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
+import { createCurve } from "./components/curve";
+import { spaceBoi } from "./components/spaceboi";
 
 let container;
 let camera, scene, renderer, clock, composer;
@@ -21,11 +23,11 @@ function init() {
     1,
     20000
   );
-  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 4);
-  camera.position.set(-4000, 30, 4000);
+  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), -1*Math.PI/4);
+  camera.position.set(-100, 10, 100);
 
   //fog
-  const color = 0xeb4950; // change color
+  const color = 0x302D36; // change color
   const near = 100;
   const far = 1000;
   scene.fog = new THREE.Fog(color, near, far);
@@ -109,9 +111,9 @@ function init() {
   const skyUniforms = sky.material.uniforms;
 
   skyUniforms["turbidity"].value = 0.1;
-  skyUniforms["rayleigh"].value = 4; // twilight mode is 0, sunset mode is 3
+  skyUniforms["rayleigh"].value = 0; // twilight mode is 0, sunset mode is 3
   skyUniforms["mieCoefficient"].value = 0.5;
-  skyUniforms["mieDirectionalG"].value = 0.7;
+  skyUniforms["mieDirectionalG"].value = 1;
 
   const parameters = {
     elevation: 0,
@@ -133,12 +135,13 @@ function init() {
   }
 
   updateSun();
+  spaceBoi(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
   //curve
-//   createCurve(scene);
+  createCurve(scene);
 //   homePage(scene);
 //   aboutPage(scene);
 //   expPage(scene);
@@ -186,10 +189,9 @@ function render() {
   upperwater.material.uniforms["time"].value += 1.0 / 60.0;
 
   const delta = clock.getDelta();
-
   time += delta * 1.0 * 0.5;
 
-  controls.update(clock.getDelta());
+  controls.update(delta);
   renderer.render(scene, camera);
 }
 
