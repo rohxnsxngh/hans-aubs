@@ -1,20 +1,36 @@
 import * as THREE from "three";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-function spaceBoi(scene) {
+function spaceBoi(scene, object) {
+  let mixer;
+
   //load Space Boi Logo
   const loader = new GLTFLoader();
   loader.load(
-    "./spaceboi/scene.gltf",
+    "./jellyfish/scene.gltf",
     function (gltf) {
-      const object = gltf.scene;
+      mixer = new THREE.AnimationMixer(gltf.scene)
+      object = gltf.scene;
       object.position.set(0, 0, 0);
-      object.scale.set(10, 10, 10);
-      object.rotateOnAxis(new THREE.Vector3(0, 1, 0), -1*Math.PI/4);
+      object.scale.set(0.25, 0.25, 0.25);
+      object.rotateOnAxis(new THREE.Vector3(0, 1, 0), (Math.PI) / 2);
       object.castShadow = true;
       scene.add(object);
+
+
+      // mixer = new THREE.AnimationMixer( object );
+      // mixer.clipAction( gltf.animations[ 0 ] ).play();
+
+      // animate();
+
+      // for (var i = 0; i < 5; i++) {
+      //   const newModel = object.clone();
+      //   const x = 100 * Math.random() - 10;
+      //   const y = 100 * Math.random() - 10;
+      //   const z = 100 * Math.random() - 10;
+      //   newModel.position.set(x, y, z);
+      //   scene.add(newModel);
+      // }
     },
     // onProgress callback
     function (xhr) {

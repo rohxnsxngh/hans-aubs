@@ -3,9 +3,10 @@ import * as THREE from "three";
 function createCurve(scene) {
   //curve camera path
   const curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-8000, 0, 8000),
+    new THREE.Vector3(0, 0, 8000),
     new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(2000, 0, -2000),
+    new THREE.Vector3(0, 0, 2000),
+    new THREE.Vector3(0, 0, -4000),
   ]);
   const speed = 0.05;
   const pathTarget = new THREE.Vector3(0, 0, 0);

@@ -7,7 +7,7 @@
           <div class="link-container">
             <img
               src="./assets/github.png"
-              style="width: 35px; height: 35px; margin-bottom: 15px"
+              style="width: 35px; height: 35px; margin-bottom: 15px;"
             /><img />
           </div>
         </a>
@@ -69,7 +69,8 @@ export default {
 #navbar {
   display: flex;
   background-color: transparent;
-  transform: translateY(-100%);
+  /* transform: translateY(-100%); */
+  transform: translateY(100%);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #navbar a {
@@ -79,7 +80,7 @@ export default {
 #navbar > * {
   padding: 1rem;
 }
-.nav-container:hover #navbar {
+/* .nav-container:hover #navbar {
   transform: translateY(0);
-}
+} */
 </style>

@@ -5,8 +5,9 @@ import { Water } from "three/examples/jsm/objects/Water.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { createCurve } from "./components/curve";
 import { spaceBoi } from "./components/spaceboi";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-let container;
+let container, object, mixer, particles;
 let camera, scene, renderer, clock, composer;
 let controls, water, upperwater, sun;
 let pointLight, ambientLight;
@@ -23,11 +24,11 @@ function init() {
     1,
     20000
   );
-  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), (-1 * Math.PI) / 4);
-  camera.position.set(-100, 10, 100);
+  camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
+  camera.position.set(-100, 20, 100);
 
   //fog
-  const color = 0x302d36; // change color
+  const color = 0x000000; // change color
   const near = 100;
   const far = 1000;
   scene.fog = new THREE.Fog(color, near, far);
@@ -49,11 +50,11 @@ function init() {
   pointLight.position.set(-4000, 0, 4100);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0x080808);
+  ambientLight = new THREE.AmbientLight(0x000000);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 15);
+  const directionalLight = new THREE.DirectionalLight(0x000000, 15);
   scene.add(directionalLight);
 
   //clock
@@ -75,7 +76,7 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0xe27d60,
+    sunColor: 0xDA9BF2,
     waterColor: 0x6aeff5,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
@@ -94,7 +95,7 @@ function init() {
     ),
     sunDirection: new THREE.Vector3(),
     sunColor: 0xe27d60,
-    waterColor: 0xc38d9e,
+    waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
   });
@@ -110,14 +111,14 @@ function init() {
 
   const skyUniforms = sky.material.uniforms;
 
-  skyUniforms["turbidity"].value = 0.1;
+  skyUniforms["turbidity"].value = 4;
   skyUniforms["rayleigh"].value = 0; // twilight mode is 0, sunset mode is 3
   skyUniforms["mieCoefficient"].value = 0.5;
   skyUniforms["mieDirectionalG"].value = 1;
 
   const parameters = {
     elevation: 0,
-    azimuth: 135,
+    azimuth: 180,
   };
 
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
@@ -137,47 +138,62 @@ function init() {
   updateSun();
   // spaceBoi(scene);
 
-  const axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
+  // const axesHelper = new THREE.AxesHelper(5);
+  // scene.add(axesHelper);
 
   //curve
-  createCurve(scene);
+  // createCurve(scene);
 
+  //Particles//
   const geometry = new THREE.BufferGeometry();
   const vertices = [];
-  const sprite = new THREE.TextureLoader().load( '/sprites.png' );
+  const sprite = new THREE.TextureLoader().load("/sprites.png");
 
-  for ( let i = 0; i < 10000; i ++ ) {
+  for (let i = 0; i < 1000000; i++) {
+    const x = 3000 * Math.random() - 1000;
+    const y = 3000 * Math.random() - 1000;
+    const z = 3000 * Math.random() - 1000;
 
-    const x = 2000 * Math.random() - 1000;
-    const y = 2000 * Math.random() - 1000;
-    const z = 2000 * Math.random() - 1000;
-
-    vertices.push( x, y, z );
-
+    vertices.push(x, y, z);
   }
 
-  geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+  geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(vertices, 3)
+  );
 
-  const material = new THREE.PointsMaterial( { size: 20, sizeAttenuation: true, alphaTest: 0.5, map: sprite, transparent: true, color: 0x000000 } );
-  // material.color.setHSL( 1.0, 0.3, 0.7 );
+  const material = new THREE.PointsMaterial({
+    size: 3,
+    sizeAttenuation: true,
+    alphaTest: 0.5,
+    map: sprite,
+    transparent: true,
+    color: 0x07c7f9,
+  });
 
-  const particles = new THREE.Points( geometry, material );
-  scene.add( particles );
+  particles = new THREE.Points(geometry, material);
+  scene.add(particles);
 
   //Controls
   //First Person Controls
-  controls = new FirstPersonControls(camera, renderer.domElement);
-  controls.movementSpeed = 300;
-  controls.lookSpeed = 0.125;
-  controls.heightMin = 10;
-  controls.heightCoef = 10;
-  controls.constrainVertical = true;
-  controls.mouseDragOn = false;
-  //controls mouse look around
-  controls.activeLook = true;
-  controls.lookVertical = false;
-  window.addEventListener("resize", onWindowResize);
+  // controls = new FirstPersonControls(camera, renderer.domElement);
+  // controls.movementSpeed = 300;
+  // controls.lookSpeed = 0.125;
+  // controls.heightMin = 10;
+  // controls.heightCoef = 10;
+  // controls.constrainVertical = true;
+  // controls.mouseDragOn = false;
+  // //controls mouse look around
+  // controls.activeLook = true;
+  // controls.lookVertical = false;
+  // window.addEventListener("resize", onWindowResize);
+
+    //Controls
+    // controls = new OrbitControls(camera, renderer.domElement);
+    // controls.maxPolarAngle = Math.PI * 0.725;
+    // controls.target.set(0, 10, 0);
+    // controls.minDistance = 40.0;
+    // controls.maxDistance = 200.0;
 }
 
 //Fit to Window
@@ -189,10 +205,11 @@ function onWindowResize() {
 }
 
 //Animate
-function animate(keys) {
+function animate() {
+  // object.position.y += 0.05
   setTimeout(function () {
     requestAnimationFrame(animate);
-  }, 1000 / 500);
+  }, 1000 / 50);
   render();
 }
 
@@ -205,7 +222,10 @@ function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
 
-  controls.update(delta);
+  particles.position.y += Math.sin(delta*2)
+
+  // mixer.update( delta );
+  // controls.update(delta);
   renderer.render(scene, camera);
 }
 
