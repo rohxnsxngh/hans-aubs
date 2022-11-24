@@ -7,7 +7,7 @@ function spaceBoi(scene, object) {
   //load Space Boi Logo
   const loader = new GLTFLoader();
   loader.load(
-    "./phone/scene.gltf",
+    "./lighthouse/scene.gltf",
     function (gltf) {
       mixer = new THREE.AnimationMixer(gltf.scene)
       object = gltf.scene;

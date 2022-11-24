@@ -6,11 +6,18 @@ import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { createCurve } from "./components/three-components/curve";
 import { spaceBoi } from "./components/three-components/spaceboi";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
+import { createText } from "./components/three-components/text";
+import { createPlane } from "./components/three-components/plane";
 
-let container, object, mixer, particles;
+let container, object, mixer, particles, plane, meshCube, colorCube, redCube, raycaster, mouse;
 let camera, scene, renderer, clock, composer;
 let controls, water, upperwater, sun;
 let pointLight, ambientLight;
+let materials, current_material;
+let resolution;
+let effectController;
+let effect;
 let time = 0;
 
 function init() {
@@ -24,11 +31,11 @@ function init() {
     1,
     20000
   );
-  camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
+  // camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
   camera.position.set(0, 20, 0);
 
   //fog
-  const color = 0x000000; // change color
+  const color = 0x000000;
   const near = 100;
   const far = 1000;
   scene.fog = new THREE.Fog(color, near, far);
@@ -58,15 +65,64 @@ function init() {
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
-  const geometryPlane = new THREE.PlaneGeometry(1, 1);
-  const materialPlane = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide,
+  const spotLight = new THREE.SpotLight(0x81e6d6, 15);
+  spotLight.position.set(0, 10, 0);
+  scene.add(spotLight);
+
+  // CUBE
+  colorCube = new THREE.Color();
+  redCube = new THREE.Color().setHex(0xf90b0b);
+  const amount = parseInt(window.location.search.slice(1)) || 5;
+  const count = Math.pow(amount, 3);
+  const geometryCube = new THREE.IcosahedronGeometry(0.5, 3);
+  const materialCube = new THREE.MeshPhongMaterial({
+    color: 0xf90b0b,
+    emissive: 0xf90b0b,
+    shininess: 30,
   });
-  const plane = new THREE.Mesh(geometryPlane, materialPlane);
-  plane.scale.set(10,10,10)
-  plane.position.set(0,10,-100)
-  scene.add(plane);
+
+  meshCube = new THREE.InstancedMesh(geometryCube, materialCube, count);
+
+  let i = 0;
+  const offset = (amount - 1) / 2;
+
+  const matrix = new THREE.Matrix4();
+
+  for (let x = 0; x < amount; x++) {
+    for (let y = 0; y < amount; y++) {
+      for (let z = 0; z < amount; z++) {
+        matrix.setPosition(offset - x, offset - y, offset - z);
+
+        meshCube.setMatrixAt(i, matrix);
+
+        i++;
+      }
+    }
+  }
+  meshCube.scale.set(10, 10, 10);
+  meshCube.position.set(0, 50, -1000);
+  scene.add(meshCube);
+
+  setupGui();
+
+  // MATERIALS
+
+  materials = generateMaterials();
+  current_material = "matte";
+
+  // MARCHING CUBES
+  resolution = 28;
+
+  effect = new MarchingCubes(
+    resolution,
+    materials[current_material],
+    true,
+    true,
+    100000
+  );
+  effect.position.set(0, 50, -400);
+  effect.scale.set(60, 80, 60);
+  scene.add(effect);
 
   //clock
   clock = new THREE.Clock();
@@ -148,22 +204,24 @@ function init() {
 
   updateSun();
   // spaceBoi(scene);
+  createText(scene);
+  createPlane(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
   //curve
-  createCurve(scene);
+  // createCurve(scene);
 
   //Particles//
   const geometry = new THREE.BufferGeometry();
   const vertices = [];
   const sprite = new THREE.TextureLoader().load("/sprites.png");
 
-  for (let i = 0; i < 1000000; i++) {
-    const x = 3000 * Math.random() - 1000;
-    const y = 3000 * Math.random() - 1000;
-    const z = 3000 * Math.random() - 1000;
+  for (let i = 0; i < 100000; i++) {
+    const x = 2000 * Math.random() - 1000;
+    const y = 2000 * Math.random() - 1000;
+    const z = 2000 * Math.random() - 1000;
 
     vertices.push(x, y, z);
   }
@@ -188,8 +246,8 @@ function init() {
   //Controls
   //First Person Controls
   controls = new FirstPersonControls(camera, renderer.domElement);
-  controls.movementSpeed = 100;
-  controls.lookSpeed = 0.05;
+  controls.movementSpeed = 50;
+  controls.lookSpeed = 0.0075;
   controls.heightMin = 10;
   controls.heightCoef = 10;
   controls.constrainVertical = true;
@@ -197,14 +255,17 @@ function init() {
   //controls mouse look around
   controls.activeLook = true;
   controls.lookVertical = false;
-  window.addEventListener("resize", onWindowResize);
 
   //Controls
   // controls = new OrbitControls(camera, renderer.domElement);
-  // controls.maxPolarAngle = Math.PI * 0.725;
-  // controls.target.set(0, 10, 0);
-  // controls.minDistance = 40.0;
-  // controls.maxDistance = 200.0;
+  // controls.dampingFactor = 0.05;
+  // controls.screenSpacePanning = false;
+  // controls.minDistance = 100;
+  // controls.maxDistance = 500;
+  // controls.maxPolarAngle = Math.PI / 2;
+
+  // Resize Window
+  window.addEventListener("resize", onWindowResize);
 }
 
 //Fit to Window
@@ -233,7 +294,31 @@ function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
 
-  particles.position.y += Math.sin(delta * 2);
+  // marching cubes
+
+  if (effectController.resolution !== resolution) {
+    resolution = effectController.resolution;
+    effect.init(Math.floor(resolution));
+  }
+
+  if (effectController.isolation !== effect.isolation) {
+    effect.isolation = effectController.isolation;
+  }
+
+  updateCubes(
+    effect,
+    time,
+    effectController.numBlobs,
+    effectController.floor,
+    effectController.wallx,
+    effectController.wallz
+  );
+
+  meshCube.rotation.z += 0.025;
+  meshCube.rotation.y += 0.025;
+  meshCube.position.y += Math.sin(time * 5) / 1;
+  effect.position.y += Math.sin(time * 5) / 2;
+  particles.position.y += Math.sin(time / 2);
 
   // mixer.update( delta );
   controls.update(delta);
@@ -247,3 +332,56 @@ console.log("Scene Polycount:", renderer.info.render.triangles);
 console.log("Active Drawcalls:", renderer.info.render.calls);
 console.log("Textures in Memory", renderer.info.memory.textures);
 console.log("Geometries in Memory", renderer.info.memory.geometries);
+
+function generateMaterials() {
+  const materials = {
+    matte: new THREE.MeshPhongMaterial({ specular: 0x111111, shininess: 1 }),
+    colors: new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      specular: 0xffffff,
+      shininess: 2,
+      vertexColors: true,
+    }),
+  };
+  return materials;
+}
+
+function setupGui() {
+  effectController = {
+    material: "matte",
+    speed: 0.05,
+    numBlobs: 50,
+    resolution: 75,
+    isolation: 50,
+    floor: false,
+    wallx: false,
+    wallz: false,
+  };
+}
+
+// this controls content of marching cubes voxel field
+function updateCubes(object, time, numblobs, floor, wallx, wallz) {
+  object.reset();
+
+  //filling the field
+  const subtract = 12;
+  const strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
+
+  for (let i = 0; i < numblobs; i++) {
+    const ballx =
+      Math.sin(i + 1.26 * time * (1.03 + 0.5 * Math.cos(0.21 * i))) * 0.27 +
+      0.5;
+    const bally =
+      Math.abs(Math.cos(i + 1.12 * time * Math.cos(1.22 + 0.1424 * i))) * 0.77; // dip into the floor
+    const ballz =
+      Math.cos(i + 1.32 * time * 0.1 * Math.sin(0.92 + 0.53 * i)) * 0.27 + 0.5;
+
+    object.addBall(ballx, bally, ballz, strength, subtract);
+  }
+
+  if (floor) object.addPlaneY(2, 12);
+  if (wallz) object.addPlaneZ(2, 12);
+  if (wallx) object.addPlaneX(2, 12);
+
+  object.update();
+}
