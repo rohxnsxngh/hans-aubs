@@ -9,6 +9,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
 import { createText } from "./components/three-components/text";
 import { createPlane } from "./components/three-components/plane";
+import { createParticles } from "./components/three-components/particles";
 
 let container, object, mixer, particles, plane, meshCube, colorCube, redCube, raycaster, mouse;
 let camera, scene, renderer, clock, composer;
@@ -205,43 +206,14 @@ function init() {
   updateSun();
   // spaceBoi(scene);
   createText(scene);
-  createPlane(scene);
-
-  const axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
-
+  // createPlane(scene);
+  particles = createParticles(scene)
+  
   //curve
   // createCurve(scene);
 
-  //Particles//
-  const geometry = new THREE.BufferGeometry();
-  const vertices = [];
-  const sprite = new THREE.TextureLoader().load("/sprites.png");
-
-  for (let i = 0; i < 100000; i++) {
-    const x = 2000 * Math.random() - 1000;
-    const y = 2000 * Math.random() - 1000;
-    const z = 2000 * Math.random() - 1000;
-
-    vertices.push(x, y, z);
-  }
-
-  geometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(vertices, 3)
-  );
-
-  const material = new THREE.PointsMaterial({
-    size: 3,
-    sizeAttenuation: true,
-    alphaTest: 0.5,
-    map: sprite,
-    transparent: true,
-    color: 0x008080,
-  });
-
-  particles = new THREE.Points(geometry, material);
-  scene.add(particles);
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
 
   //Controls
   //First Person Controls

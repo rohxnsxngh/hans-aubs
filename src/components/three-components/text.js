@@ -5,7 +5,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createText(scene) {
     const fontLoaderExp = new FontLoader();
     fontLoaderExp.load(
-      "./node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json",
+      "/Fonts/Droid_Serif_Regular.json",
       (droidFont) => {
         const textGeometryHome = new TextGeometry(
           "What if web design could be better...\n     What if it could be infinite...",
