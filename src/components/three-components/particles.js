@@ -29,6 +29,7 @@ function createParticles(scene) {
   });
 
   const particles = new THREE.Points(geometry, material);
+  particles.position.set(0, 0, -500);
   scene.add(particles);
   return particles;
 }

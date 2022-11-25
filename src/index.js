@@ -10,8 +10,11 @@ import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
 import { createText } from "./components/three-components/text";
 import { createPlane } from "./components/three-components/plane";
 import { createParticles } from "./components/three-components/particles";
+import { createCube } from "./components/three-components/cube";
+import { updateSun } from "./components/three-components/updateSun";
+import { generateMaterials } from "./components/three-components/generateMaterials";
 
-let container, object, mixer, particles, plane, meshCube, colorCube, redCube, raycaster, mouse;
+let container, object, mixer, particles, plane, meshCube, cube;
 let camera, scene, renderer, clock, composer;
 let controls, water, upperwater, sun;
 let pointLight, ambientLight;
@@ -70,40 +73,6 @@ function init() {
   spotLight.position.set(0, 10, 0);
   scene.add(spotLight);
 
-  // CUBE
-  colorCube = new THREE.Color();
-  redCube = new THREE.Color().setHex(0xf90b0b);
-  const amount = parseInt(window.location.search.slice(1)) || 5;
-  const count = Math.pow(amount, 3);
-  const geometryCube = new THREE.IcosahedronGeometry(0.5, 3);
-  const materialCube = new THREE.MeshPhongMaterial({
-    color: 0xf90b0b,
-    emissive: 0xf90b0b,
-    shininess: 30,
-  });
-
-  meshCube = new THREE.InstancedMesh(geometryCube, materialCube, count);
-
-  let i = 0;
-  const offset = (amount - 1) / 2;
-
-  const matrix = new THREE.Matrix4();
-
-  for (let x = 0; x < amount; x++) {
-    for (let y = 0; y < amount; y++) {
-      for (let z = 0; z < amount; z++) {
-        matrix.setPosition(offset - x, offset - y, offset - z);
-
-        meshCube.setMatrixAt(i, matrix);
-
-        i++;
-      }
-    }
-  }
-  meshCube.scale.set(10, 10, 10);
-  meshCube.position.set(0, 50, -1000);
-  scene.add(meshCube);
-
   setupGui();
 
   // MATERIALS
@@ -121,15 +90,12 @@ function init() {
     true,
     100000
   );
-  effect.position.set(0, 50, -400);
+  effect.position.set(400, 50, -200);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
   //clock
   clock = new THREE.Clock();
-
-  //Sun
-  sun = new THREE.Vector3();
 
   //Water
   const waterGeometry = new THREE.PlaneGeometry(20000, 20000);
@@ -172,44 +138,11 @@ function init() {
   upperwater.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   scene.add(upperwater);
 
-  //SkyBox
-  const sky = new Sky();
-  sky.scale.setScalar(20000);
-  scene.add(sky);
-
-  const skyUniforms = sky.material.uniforms;
-
-  skyUniforms["turbidity"].value = 1;
-  skyUniforms["rayleigh"].value = -1; // twilight mode is 0, sunset mode is 3, -1 turns it all off
-  skyUniforms["mieCoefficient"].value = 0.5;
-  skyUniforms["mieDirectionalG"].value = 1;
-
-  const parameters = {
-    elevation: 0,
-    azimuth: 180,
-  };
-
-  const pmremGenerator = new THREE.PMREMGenerator(renderer);
-  let renderTarget;
-
-  function updateSun() {
-    const phi = THREE.MathUtils.degToRad(90 - parameters.elevation);
-    const theta = THREE.MathUtils.degToRad(parameters.azimuth);
-    sun.setFromSphericalCoords(1, phi, theta);
-    sky.material.uniforms["sunPosition"].value.copy(sun);
-    water.material.uniforms["sunDirection"].value.copy(sun).normalize();
-    if (renderTarget !== undefined) renderTarget.dispose();
-    renderTarget = pmremGenerator.fromScene(sky);
-    scene.environment = renderTarget.texture;
-  }
-
-  updateSun();
-  // spaceBoi(scene);
+  updateSun(scene, water, renderer);
   createText(scene);
   // createPlane(scene);
   particles = createParticles(scene)
-  
-  //curve
+  meshCube = createCube(scene)
   // createCurve(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
@@ -219,7 +152,7 @@ function init() {
   //First Person Controls
   controls = new FirstPersonControls(camera, renderer.domElement);
   controls.movementSpeed = 50;
-  controls.lookSpeed = 0.0075;
+  controls.lookSpeed = 0.025; //0.0075
   controls.heightMin = 10;
   controls.heightCoef = 10;
   controls.constrainVertical = true;
@@ -250,7 +183,6 @@ function onWindowResize() {
 
 //Animate
 function animate() {
-  // object.position.y += 0.05
   setTimeout(function () {
     requestAnimationFrame(animate);
   }, 1000 / 50);
@@ -289,6 +221,7 @@ function render() {
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
+  
   effect.position.y += Math.sin(time * 5) / 2;
   particles.position.y += Math.sin(time / 2);
 
@@ -304,19 +237,6 @@ console.log("Scene Polycount:", renderer.info.render.triangles);
 console.log("Active Drawcalls:", renderer.info.render.calls);
 console.log("Textures in Memory", renderer.info.memory.textures);
 console.log("Geometries in Memory", renderer.info.memory.geometries);
-
-function generateMaterials() {
-  const materials = {
-    matte: new THREE.MeshPhongMaterial({ specular: 0x111111, shininess: 1 }),
-    colors: new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      specular: 0xffffff,
-      shininess: 2,
-      vertexColors: true,
-    }),
-  };
-  return materials;
-}
 
 function setupGui() {
   effectController = {
