@@ -29,8 +29,8 @@ function createCube(scene) {
       }
     }
   }
-  meshCube.scale.set(10, 10, 10);
-  meshCube.position.set(-300, 56, -200);
+  meshCube.scale.set(7.5, 7.5, 7.5);
+  meshCube.position.set(332.82, 56, 499.23);
   scene.add(meshCube);
   return meshCube;
 }

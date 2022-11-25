@@ -7,12 +7,15 @@ import { createCurve } from "./components/three-components/curve";
 import { spaceBoi } from "./components/three-components/spaceboi";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
-import { createText } from "./components/three-components/text";
+import { createTextHome } from "./components/three-components/text/textHome";
 import { createPlane } from "./components/three-components/plane";
 import { createParticles } from "./components/three-components/particles";
 import { createCube } from "./components/three-components/cube";
 import { updateSun } from "./components/three-components/updateSun";
 import { generateMaterials } from "./components/three-components/generateMaterials";
+import { createBoundary } from "./components/three-components/createBoundary";
+import { createTextAbout } from "./components/three-components/text/textAbout";
+import { createTextExp } from "./components/three-components/text/textExp";
 
 let container, object, mixer, particles, plane, meshCube, cube;
 let camera, scene, renderer, clock, composer;
@@ -21,7 +24,7 @@ let pointLight, ambientLight;
 let materials, current_material;
 let resolution;
 let effectController;
-let effect;
+let effect, effect2;
 let time = 0;
 
 function init() {
@@ -69,9 +72,18 @@ function init() {
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
-  const spotLight = new THREE.SpotLight(0x81e6d6, 15);
-  spotLight.position.set(0, 10, 0);
-  scene.add(spotLight);
+  // const spotLight = new THREE.SpotLight(0xffffff, 15);
+  // spotLight.position.set(0, 100, 0);
+  // spotLight.castShadow = true;
+  // spotLight.shadow.camera.near = 500;
+  // spotLight.shadow.camera.far = 4000;
+  // spotLight.shadow.camera.fov = 30;
+  // spotLight.shadow.mapSize.width = 200;
+  // spotLight.shadow.mapSize.height = 200;
+  // scene.add(spotLight);
+
+  // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+  // scene.add(spotLightHelper);
 
   setupGui();
 
@@ -90,9 +102,20 @@ function init() {
     true,
     100000
   );
-  effect.position.set(400, 50, -200);
+  effect.position.set(424.26406, 50, -424.26406);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
+
+  effect2 = new MarchingCubes(
+    resolution,
+    materials[current_material],
+    true,
+    true,
+    100000
+  );
+  effect2.position.set(588.5, 50, -116.909);
+  effect2.scale.set(60, 80, 60);
+  scene.add(effect2);
 
   //clock
   clock = new THREE.Clock();
@@ -139,10 +162,13 @@ function init() {
   scene.add(upperwater);
 
   updateSun(scene, water, renderer);
-  createText(scene);
+  createTextHome(scene);
+  createTextAbout(scene);
+  createTextExp(scene);
+  createBoundary(scene);
   // createPlane(scene);
-  particles = createParticles(scene)
-  meshCube = createCube(scene)
+  particles = createParticles(scene);
+  meshCube = createCube(scene);
   // createCurve(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
@@ -217,11 +243,19 @@ function render() {
     effectController.wallx,
     effectController.wallz
   );
+  updateCubes(
+    effect2,
+    time,
+    effectController.numBlobs,
+    effectController.floor,
+    effectController.wallx,
+    effectController.wallz
+  );
 
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
-  
+
   effect.position.y += Math.sin(time * 5) / 2;
   particles.position.y += Math.sin(time / 2);
 
@@ -243,7 +277,7 @@ function setupGui() {
     material: "matte",
     speed: 0.05,
     numBlobs: 50,
-    resolution: 75,
+    resolution: 50,
     isolation: 50,
     floor: false,
     wallx: false,
