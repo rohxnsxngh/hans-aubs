@@ -1,10 +1,8 @@
 import * as THREE from "three";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
-function createTextHome(scene) {
-  const fontHome = new FontLoader();
-  fontHome.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
+function createTextHome(scene, fontLoader) {
+  fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryHome = new TextGeometry(
       "<Rohan Singh/>",
       {
@@ -14,7 +12,7 @@ function createTextHome(scene) {
       }
     );
     const textGeometryHomeCaption = new TextGeometry(
-      "Welcome to the Forge. This is my slice of reality, a new\ndimension, and my workshop.There are no rules here so feel\nfree to explore this infinite plane. I have one request, please\nstay inside the boundary. If you leave the boundary you will\nenter the void and I cannot guarantee you're safety past the edge.",
+      "Welcome to the Forge. This is my slice of reality, a new\ndimension, and my workshop. There are no rules here so feel\nfree to explore this infinite plane. I have one request, please\nstay inside the boundary. If you leave the boundary you will\nenter the void and I cannot guarantee you're safety past the edge.",
       {
         height: 1,
         size: 6,

@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls.js";
 import { Water } from "three/examples/jsm/objects/Water.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
@@ -8,7 +9,6 @@ import { spaceBoi } from "./components/three-components/spaceboi";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
 import { createTextHome } from "./components/three-components/text/textHome";
-import { createPlane } from "./components/three-components/plane";
 import { createParticles } from "./components/three-components/particles";
 import { createCube } from "./components/three-components/cube";
 import { updateSun } from "./components/three-components/updateSun";
@@ -16,15 +16,17 @@ import { generateMaterials } from "./components/three-components/generateMateria
 import { createBoundary } from "./components/three-components/createBoundary";
 import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
+import { createTextLab } from "./components/three-components/text/textLabs";
+import { createPlane } from "./components/three-components/plane";
 
-let container, object, mixer, particles, plane, meshCube, cube;
+let container, object, mixer, particles, plane, meshCube, cube, fontLoader;
 let camera, scene, renderer, clock, composer;
 let controls, water, upperwater, sun;
 let pointLight, ambientLight;
 let materials, current_material;
 let resolution;
 let effectController;
-let effect, effect2;
+let effect, effect2, effectAbout, effectAbout2;
 let time = 0;
 
 function init() {
@@ -102,7 +104,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(424.26406, 50, -424.26406);
+  effect.position.set(596, 50, -69.166);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -113,9 +115,31 @@ function init() {
     true,
     100000
   );
-  effect2.position.set(588.5, 50, -116.909);
+  effect2.position.set(546, 50, 248.765);
   effect2.scale.set(60, 80, 60);
   scene.add(effect2);
+
+  effectAbout = new MarchingCubes(
+    resolution,
+    materials[current_material],
+    true,
+    true,
+    100000
+  );
+  effectAbout.position.set(80, 50, 594.643);
+  effectAbout.scale.set(60, 80, 60);
+  scene.add(effectAbout);
+
+  effectAbout2 = new MarchingCubes(
+    resolution,
+    materials[current_material],
+    true,
+    true,
+    100000
+  );
+  effectAbout2.position.set(-220, 50, 558.211);
+  effectAbout2.scale.set(60, 80, 60);
+  scene.add(effectAbout2);
 
   //clock
   clock = new THREE.Clock();
@@ -161,10 +185,13 @@ function init() {
   upperwater.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   scene.add(upperwater);
 
+  fontLoader = new FontLoader();
+
   updateSun(scene, water, renderer);
-  createTextHome(scene);
-  createTextAbout(scene);
-  createTextExp(scene);
+  createTextHome(scene, fontLoader);
+  createTextAbout(scene, fontLoader);
+  createTextExp(scene, fontLoader);
+  createTextLab(scene, fontLoader);
   createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
@@ -251,6 +278,24 @@ function render() {
     effectController.wallx,
     effectController.wallz
   );
+  updateCubes(
+    effectAbout,
+    time,
+    effectController.numBlobs,
+    effectController.floor,
+    effectController.wallx,
+    effectController.wallz
+  );
+  updateCubes(
+    effectAbout2,
+    time,
+    effectController.numBlobs,
+    effectController.floor,
+    effectController.wallx,
+    effectController.wallz
+  );
+    
+
 
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;

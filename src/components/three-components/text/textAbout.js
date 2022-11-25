@@ -1,10 +1,8 @@
 import * as THREE from "three";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
-function createTextAbout(scene) {
-  const fontAbout = new FontLoader();
-  fontAbout.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
+function createTextAbout(scene, fontLoader) {
+  fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryAbout = new TextGeometry("<About Me/>", {
       height: 5,
       size: 18,
@@ -12,8 +10,8 @@ function createTextAbout(scene) {
     });
     const textMaterialAbout = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
     const textMeshAbout = new THREE.Mesh(textGeometryAbout, textMaterialAbout);
-    textMeshAbout.position.set(480, 80, -360);
-    textMeshAbout.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 3);
+    textMeshAbout.position.set(600, 80, 0);
+    textMeshAbout.rotateOnAxis(new THREE.Vector3(0, 1, 0), -11 * Math.PI / 20);
     scene.add(textMeshAbout);
 
     const textGeometryAboutCaption = new TextGeometry(
@@ -26,8 +24,8 @@ function createTextAbout(scene) {
       );
       const textMaterialAboutCaption = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const textMeshAboutCaption = new THREE.Mesh(textGeometryAboutCaption, textMaterialAboutCaption);
-      textMeshAboutCaption.position.set(480, 70, -360);
-      textMeshAboutCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 3);
+      textMeshAboutCaption.position.set(600, 70, -15);
+      textMeshAboutCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), -11 * Math.PI / 20);
       scene.add(textMeshAboutCaption);
       return textMeshAbout, textMeshAboutCaption;
 
