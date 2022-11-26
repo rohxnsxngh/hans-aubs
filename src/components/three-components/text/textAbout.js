@@ -5,12 +5,12 @@ function createTextAbout(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryAbout = new TextGeometry("<About Me/>", {
       height: 5,
-      size: 18,
+      size: 22,
       font: droidFont,
     });
     const textMaterialAbout = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
     const textMeshAbout = new THREE.Mesh(textGeometryAbout, textMaterialAbout);
-    textMeshAbout.position.set(600, 80, 0);
+    textMeshAbout.position.set(400, 120, 0);
     textMeshAbout.rotateOnAxis(new THREE.Vector3(0, 1, 0), -11 * Math.PI / 20);
     scene.add(textMeshAbout);
 
@@ -24,7 +24,7 @@ function createTextAbout(scene, fontLoader) {
       );
       const textMaterialAboutCaption = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const textMeshAboutCaption = new THREE.Mesh(textGeometryAboutCaption, textMaterialAboutCaption);
-      textMeshAboutCaption.position.set(600, 70, -15);
+      textMeshAboutCaption.position.set(400, 105, -15);
       textMeshAboutCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), -11 * Math.PI / 20);
       scene.add(textMeshAboutCaption);
       return textMeshAbout, textMeshAboutCaption;

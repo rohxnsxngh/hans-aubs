@@ -6,17 +6,17 @@ function createTextExp(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryExp = new TextGeometry("<Experience/>", {
       height: 5,
-      size: 18,
+      size: 22,
       font: droidFont,
     });
     const textMaterialExp = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
     const textMeshExp = new THREE.Mesh(textGeometryExp, textMaterialExp);
-    textMeshExp.position.set(0, 80, 600);
+    textMeshExp.position.set(0, 120, 300);
     textMeshExp.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0.95 * Math.PI);
     scene.add(textMeshExp);
 
     const textGeometryExpCaption = new TextGeometry(
-      "For more information check my\nportfolio website located in the menu",
+      "For more information please visit my\nportfolio website located in the menu",
       {
         height: 1,
         size: 6,
@@ -30,7 +30,7 @@ function createTextExp(scene, fontLoader) {
       textGeometryExpCaption,
       textMaterialExpCaption
     );
-    textMeshExpCaption.position.set(0, 65, 600);
+    textMeshExpCaption.position.set(0, 105, 300);
     textMeshExpCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0.95 * Math.PI);
     scene.add(textMeshExpCaption);
   });

@@ -17,9 +17,7 @@ import { createBoundary } from "./components/three-components/createBoundary";
 import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
-import { createPlane } from "./components/three-components/plane";
-import { createTeslaCube } from "./components/three-components/teslaCube";
-import { createAMCube } from "./components/three-components/uniCube";
+import { createRectLight } from "./components/three-components/createRectLight";
 
 let container, object, mixer, particles, plane, meshCube, cube, fontLoader;
 let camera, scene, renderer, clock, composer;
@@ -64,15 +62,15 @@ function init() {
   container.appendChild(renderer.domElement);
 
   //LIGHT
-  pointLight = new THREE.PointLight(0xeb4950);
+  pointLight = new THREE.PointLight(0xfa1d00);
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0x81e6d6, 15);
+  ambientLight = new THREE.AmbientLight(0xfa1d00, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
-  const directionalLight = new THREE.DirectionalLight(0x81e6d6, 15);
+  const directionalLight = new THREE.DirectionalLight(0xfa1d00, 15);
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
@@ -106,7 +104,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(-531, 50, -279.355);
+  effect.position.set(-600, 50, -290);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -150,7 +148,7 @@ function init() {
     fog: scene.fog !== undefined,
   });
   upperwater.rotation.x = -Math.PI / 2;
-  upperwater.position.set(0, 100, 0);
+  upperwater.position.set(0, 200, 0);
   upperwater.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   scene.add(upperwater);
 
@@ -161,8 +159,6 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  uniCube = createAMCube(scene)
-  teslaCube = createTeslaCube(scene)
   createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
@@ -172,18 +168,22 @@ function init() {
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
+  createRectLight(scene);
+
   //Controls
   //First Person Controls
   controls = new FirstPersonControls(camera, renderer.domElement);
   controls.movementSpeed = 50;
   controls.lookSpeed = 0.025; //0.0075
-  controls.heightMin = 10;
-  controls.heightCoef = 10;
+  // controls.heightMin = 10;
+  // controls.heightCoef = 10;
+  controls.heightMax = 120;
+  controls.heightMin = 0;
   controls.constrainVertical = true;
   controls.mouseDragOn = false;
   //controls mouse look around
   controls.activeLook = true;
-  controls.lookVertical = false;
+  controls.lookVertical = true;
 
   //Controls
   // controls = new OrbitControls(camera, renderer.domElement);
@@ -245,12 +245,6 @@ function render() {
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
-
-  teslaCube.rotation.y += 0.025;
-  teslaCube.position.y += Math.sin(time * 5) / 3;
-
-  uniCube.rotation.y += 0.025;
-  uniCube.position.y += Math.sin(time * 5) / 3;
 
   effect.position.y += Math.sin(time * 5) / 2;
   particles.position.y += Math.sin(time / 2);
