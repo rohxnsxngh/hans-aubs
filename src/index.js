@@ -18,15 +18,17 @@ import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
 import { createPlane } from "./components/three-components/plane";
+import { createTeslaCube } from "./components/three-components/teslaCube";
+import { createAMCube } from "./components/three-components/uniCube";
 
 let container, object, mixer, particles, plane, meshCube, cube, fontLoader;
 let camera, scene, renderer, clock, composer;
-let controls, water, upperwater, sun;
+let controls, water, upperwater, teslaCube, uniCube, sun;
 let pointLight, ambientLight;
 let materials, current_material;
 let resolution;
 let effectController;
-let effect, effect2, effectAbout, effectAbout2;
+let effect;
 let time = 0;
 
 function init() {
@@ -66,7 +68,7 @@ function init() {
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0x81e6d6);
+  ambientLight = new THREE.AmbientLight(0x81e6d6, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
@@ -75,13 +77,13 @@ function init() {
   scene.add(directionalLight);
 
   // const spotLight = new THREE.SpotLight(0xffffff, 15);
-  // spotLight.position.set(0, 100, 0);
+  // spotLight.position.set(-200, 100, -400);
   // spotLight.castShadow = true;
   // spotLight.shadow.camera.near = 500;
   // spotLight.shadow.camera.far = 4000;
   // spotLight.shadow.camera.fov = 30;
-  // spotLight.shadow.mapSize.width = 200;
-  // spotLight.shadow.mapSize.height = 200;
+  // spotLight.shadow.mapSize.width = 400;
+  // spotLight.shadow.mapSize.height = 400;
   // scene.add(spotLight);
 
   // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
@@ -104,42 +106,9 @@ function init() {
     true,
     100000
   );
-  effect.position.set(596, 50, -69.166);
+  effect.position.set(-531, 50, -279.355);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
-
-  effect2 = new MarchingCubes(
-    resolution,
-    materials[current_material],
-    true,
-    true,
-    100000
-  );
-  effect2.position.set(546, 50, 248.765);
-  effect2.scale.set(60, 80, 60);
-  scene.add(effect2);
-
-  effectAbout = new MarchingCubes(
-    resolution,
-    materials[current_material],
-    true,
-    true,
-    100000
-  );
-  effectAbout.position.set(80, 50, 594.643);
-  effectAbout.scale.set(60, 80, 60);
-  scene.add(effectAbout);
-
-  effectAbout2 = new MarchingCubes(
-    resolution,
-    materials[current_material],
-    true,
-    true,
-    100000
-  );
-  effectAbout2.position.set(-220, 50, 558.211);
-  effectAbout2.scale.set(60, 80, 60);
-  scene.add(effectAbout2);
 
   //clock
   clock = new THREE.Clock();
@@ -192,6 +161,8 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
+  uniCube = createAMCube(scene)
+  teslaCube = createTeslaCube(scene)
   createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
@@ -270,36 +241,16 @@ function render() {
     effectController.wallx,
     effectController.wallz
   );
-  updateCubes(
-    effect2,
-    time,
-    effectController.numBlobs,
-    effectController.floor,
-    effectController.wallx,
-    effectController.wallz
-  );
-  updateCubes(
-    effectAbout,
-    time,
-    effectController.numBlobs,
-    effectController.floor,
-    effectController.wallx,
-    effectController.wallz
-  );
-  updateCubes(
-    effectAbout2,
-    time,
-    effectController.numBlobs,
-    effectController.floor,
-    effectController.wallx,
-    effectController.wallz
-  );
-    
-
 
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
+
+  teslaCube.rotation.y += 0.025;
+  teslaCube.position.y += Math.sin(time * 5) / 3;
+
+  uniCube.rotation.y += 0.025;
+  uniCube.position.y += Math.sin(time * 5) / 3;
 
   effect.position.y += Math.sin(time * 5) / 2;
   particles.position.y += Math.sin(time / 2);

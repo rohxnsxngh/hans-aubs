@@ -2,13 +2,7 @@ import * as THREE from "three";
 
 function generateMaterials() {
   const materials = {
-    matte: new THREE.MeshPhongMaterial({ specular: 0x111111, shininess: 1 }),
-    colors: new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      specular: 0xffffff,
-      shininess: 2,
-      vertexColors: true,
-    }),
+    matte: new THREE.MeshPhongMaterial({ specular: 0xE60C00, shininess: 10, color: 0xffffff }),
   };
   return materials;
 }
