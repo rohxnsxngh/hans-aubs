@@ -19,9 +19,9 @@ import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
 import { createRectLight } from "./components/three-components/createRectLight";
 
-let container, object, mixer, particles, plane, meshCube, cube, fontLoader;
+let container, object, mixer, particles, plane, meshCube, fontLoader;
 let camera, scene, renderer, clock, composer;
-let controls, water, upperwater, teslaCube, uniCube, sun;
+let controls, water, upperwater, sun, boundary;
 let pointLight, ambientLight;
 let materials, current_material;
 let resolution;
@@ -46,7 +46,7 @@ function init() {
   //fog
   const color = 0x000000;
   const near = 100;
-  const far = 1000;
+  const far = 2000;
   scene.fog = new THREE.Fog(color, near, far);
 
   // Renderer
@@ -124,8 +124,8 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0xda9bf2,
-    waterColor: 0x6aeff5,
+    sunColor: 0x55C2D6,
+    waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
   });
@@ -142,7 +142,7 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0xe27d60,
+    sunColor: 0x55C2D6,
     waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
@@ -159,7 +159,7 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createBoundary(scene);
+  boundary = createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
   meshCube = createCube(scene);
@@ -183,7 +183,7 @@ function init() {
   controls.mouseDragOn = false;
   //controls mouse look around
   controls.activeLook = true;
-  controls.lookVertical = true;
+  controls.lookVertical = false;
 
   //Controls
   // controls = new OrbitControls(camera, renderer.domElement);
@@ -246,8 +246,10 @@ function render() {
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
 
+  boundary.position.y += Math.sin(time * 5) / 3;
+
   effect.position.y += Math.sin(time * 5) / 2;
-  particles.position.y += Math.sin(time / 2);
+  particles.position.y += Math.sin(time / 4);
 
   // mixer.update( delta );
   controls.update(delta);

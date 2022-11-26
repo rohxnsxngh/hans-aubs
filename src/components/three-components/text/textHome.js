@@ -12,7 +12,7 @@ function createTextHome(scene, fontLoader) {
       }
     );
     const textGeometryHomeCaption = new TextGeometry(
-      "Welcome to the Forge. This is my slice of reality, my new\ndimension, and my workshop. There are no rules here so feel\nfree to explore this infinite plane. I have one request, please\nstay inside the boundary. If you leave the boundary you will\nenter the void and I cannot guarantee you're safety past the edge.",
+      "Welcome to the Forge. This is my slice of reality, an alternate\ndimension where anything is possible. There are no rules here\nso feel free to explore this infinite plane. I have one request, please\nstay inside the boundary. If you leave the boundary you will\nenter the void where I cannot guarantee your safety.",
       {
         height: 1,
         size: 6,
