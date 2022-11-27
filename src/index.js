@@ -84,7 +84,7 @@ function init() {
       let pow = ((ySegments - j) / ySegments) * yPowMax;
       let y = -Math.pow(yBase, pow) + yHalfSize + 1;
       vertices.push(x, y, 0);
-      heights.push(10); // for now our mesh is flat, so heights are zero
+      heights.push(0); // for now our mesh is flat, so heights are zero
     }
   }
 
@@ -142,7 +142,8 @@ function init() {
   });
 
   mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(0, 20, -100);
+  mesh.position.set(0, 150, -600);
+  mesh.scale.set(30,15,15)
   scene.add(mesh);
   //mesh.geometry.computeFaceNormals();
   mesh.geometry.computeVertexNormals();
