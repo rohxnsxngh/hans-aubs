@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function createAmbientSound(camera, scene) {
+function createAmbientSound(camera, scene, frequencySamples) {
   const startButton = document.getElementById("start-experience");
   const audio = document.getElementById("audio");
   // create an AudioListener and add it to the camera
@@ -39,7 +39,17 @@ function createAmbientSound(camera, scene) {
     });
   });
 
-  return data;
+  const ACTX = new AudioContext();
+  const ANALYSER = ACTX.createAnalyser();
+  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+  ANALYSER.fftSize = 4 * frequencySamples;
+  ANALYSER.smoothingTimeConstant = 0.5;
+  const SOURCE = ACTX.createMediaElementSource(AUDIO);
+  SOURCE.connect(ANALYSER);
+
+  //Audio Analyzer
+
+  return sound;
 }
 
 export { createAmbientSound };

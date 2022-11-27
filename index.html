@@ -17,5 +17,23 @@
     <script type="module" src="/src/main.js"></script>
     <script id="webgl" type="module" src="/src/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.3.0/simplex-noise.min.js"></script>
+    <script type="x-shader/x-vertex" id="vertexshader">
+            attribute float displacement;
+            uniform vec3 vLut[256];
+            varying vec3 vColor;
+      void main(){
+            int index = int(displacement);
+            vColor = vLut[index];
+            vec3 newPosition = position + normal*displacement/15.5;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition,1.0);
+      }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+      varying vec3 vColor;
+      void main(){
+        gl_FragColor = vec4(vColor,1.0);
+      }
+    </script>
   </body>
 </html>

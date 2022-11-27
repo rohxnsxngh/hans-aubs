@@ -242,6 +242,13 @@
     "color-convert" "^2.0.1"
     "color-string" "^1.9.0"
 
+"colormap@^2.3.2":
+  "integrity" "sha512-jDOjaoEEmA9AgA11B/jCSAvYE95r3wRoAyTf3LEHGiUVlNHJaL1mRkf5AyLSpQBVGfTEPwGEqCIzL+kgr2WgNA=="
+  "resolved" "https://registry.npmjs.org/colormap/-/colormap-2.3.2.tgz"
+  "version" "2.3.2"
+  dependencies:
+    "lerp" "^1.0.3"
+
 "css-selector-tokenizer@^0.8.0":
   "integrity" "sha512-Jd6Ig3/pe62/qe5SBPTN8h8LeUg/pT4lLgtavPf7updwwHpvFzxvOQBHYj2LZDMjUnBzgvIUSjRcf6oT5HzHFg=="
   "resolved" "https://registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz"
@@ -444,6 +451,11 @@
   "integrity" "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng=="
   "resolved" "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz"
   "version" "7.0.0"
+
+"lerp@^1.0.3":
+  "integrity" "sha512-70Rh4rCkJDvwWiTsyZ1HmJGvnyfFah4m6iTux29XmasRiZPDBpT9Cfa4ai73+uLZxnlKruUS62jj2lb11wURiA=="
+  "resolved" "https://registry.npmjs.org/lerp/-/lerp-1.0.3.tgz"
+  "version" "1.0.3"
 
 "lilconfig@^2.0.5", "lilconfig@^2.0.6":
   "integrity" "sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg=="

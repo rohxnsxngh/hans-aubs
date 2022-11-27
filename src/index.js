@@ -22,16 +22,39 @@ import { createAmbientSound } from "./components/three-components/ambientSound";
 import { createSphere } from "./components/three-components/createSphere";
 import { math } from "../math";
 import { noise } from "../noise.js";
+import colormap from "colormap";
 
 let container, object, mixer, particles, plane, meshCube, fontLoader;
 let camera, scene, renderer, clock, composer;
-let controls, water, upperwater, sun, boundary, sound, noise1;
-let pointLight, ambientLight, data, sphere;
+let controls,
+  water,
+  upperwater,
+  sun,
+  boundary,
+  sound,
+  noise1,
+  heights,
+  vertices,
+  mesh;
+let pointLight, ambientLight, sphere, indices, ACTX, ANALYSER, AUDIO, SOURCE;
 let materials, current_material;
 let resolution;
 let effectController;
 let effect;
 let time = 0;
+
+const frequencySamples = 256;
+const timeSamples = 400;
+const data = new Uint8Array(frequencySamples);
+const nVertices = (frequencySamples + 1) * (timeSamples + 1);
+let xSegments = timeSamples;
+let ySegments = frequencySamples;
+let xSize = 40;
+let ySize = 20;
+let xHalfSize = xSize / 2;
+let yHalfSize = ySize / 2;
+let xSegmentSize = xSize / xSegments; //Size of one square
+let ySegmentSize = ySize / ySegments;
 
 function init() {
   container = document.getElementById("container");
@@ -46,6 +69,93 @@ function init() {
   );
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
   camera.position.set(0, 20, 0);
+
+    //Audio Analyzer
+    ACTX = new AudioContext();
+    ANALYSER = ACTX.createAnalyser();
+    AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+    AUDIO.play();
+    ANALYSER.fftSize = 4 * frequencySamples;
+    ANALYSER.smoothingTimeConstant = 0.5;
+    SOURCE = ACTX.createMediaElementSource(AUDIO);
+    SOURCE.connect(ANALYSER);
+
+  const geometry = new THREE.BufferGeometry();
+  indices = [];
+  heights = [];
+  vertices = [];
+
+  const yPowMax = Math.log(ySize);
+  const yBase = Math.E;
+  // generate vertices for a simple grid geometry
+  for (let i = 0; i <= xSegments; i++) {
+    let x = i * xSegmentSize - xHalfSize; //midpoint of mesh is 0,0
+    for (let j = 0; j <= ySegments; j++) {
+      let pow = ((ySegments - j) / ySegments) * yPowMax;
+      let y = -Math.pow(yBase, pow) + yHalfSize + 1;
+      vertices.push(x, y, 0);
+      heights.push(10); // for now our mesh is flat, so heights are zero
+    }
+  }
+
+  for (let i = 0; i < xSegments; i++) {
+    for (let j = 0; j < ySegments; j++) {
+      let a = i * (ySegments + 1) + (j + 1);
+      let b = i * (ySegments + 1) + j;
+      let c = (i + 1) * (ySegments + 1) + j;
+      let d = (i + 1) * (ySegments + 1) + (j + 1);
+      // generate two faces (triangles) per iteration
+      indices.push(a, b, d); // face one
+      indices.push(b, c, d); // face two
+    }
+  }
+  geometry.setIndex(indices);
+  heights = new Uint8Array(heights);
+  geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(vertices, 3)
+  );
+  geometry.setAttribute(
+    "displacement",
+    new THREE.Uint8BufferAttribute(heights, 1)
+  );
+
+  const colors = colormap({
+    //inferno, electric
+    colormap: "electric",
+    nshades: 256,
+    format: "rgba",
+    alpha: 1,
+  });
+  colors[0] = [0, 0, 0, 0];
+  console.log(colors);
+  const lut = colors.map((color) => {
+    const red = color[0] / 255;
+    const green = color[1] / 255;
+    const blue = color[2] / 255;
+
+    return new THREE.Vector3(red, green, blue);
+  });
+  console.log(lut);
+  //Grab the shaders from the document
+  const vShader = document.getElementById("vertexshader");
+  const fShader = document.getElementById("fragmentshader");
+  // Define the uniforms. V3V gives us a 3vector for RGB color in out LUT
+  const uniforms = {
+    vLut: { type: "v3v", value: lut },
+  };
+
+  const material = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: vShader.text,
+    fragmentShader: fShader.text,
+  });
+
+  mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(0, 20, -100);
+  scene.add(mesh);
+  //mesh.geometry.computeFaceNormals();
+  mesh.geometry.computeVertexNormals();
 
   //fog
   const color = 0x000000;
@@ -175,7 +285,9 @@ function init() {
   createTextLab(scene, fontLoader);
   sphere = createSphere(scene, camera);
 
-  data = createAmbientSound(camera, scene);
+  sound = createAmbientSound(camera, scene, frequencySamples);
+
+  
 
   boundary = createBoundary(scene);
   // createPlane(scene);
@@ -240,6 +352,8 @@ function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
 
+  updateGeometry();
+
   //Simplex Noise Sphere
   const remap = [15, 13, 11, 9, 7, 5, 3, 1, 0, 2, 4, 6, 8, 10, 12, 14];
   for (let r = 0; r < data.length; ++r) {
@@ -285,6 +399,18 @@ function render() {
   controls.update(delta);
   renderer.render(scene, camera);
 }
+
+const updateGeometry = function () {
+  ANALYSER.getByteFrequencyData(data);
+  const startVal = frequencySamples + 1;
+  const endVal = nVertices - startVal;
+  heights.copyWithin(0, startVal, nVertices + 1);
+  heights.set(data, endVal - startVal);
+  mesh.geometry.setAttribute(
+    "displacement",
+    new THREE.Uint8BufferAttribute(heights, 1)
+  );
+};
 
 init();
 animate();
