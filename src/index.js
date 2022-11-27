@@ -18,11 +18,13 @@ import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
 import { createRectLight } from "./components/three-components/createRectLight";
+import { createAmbientSound } from "./components/three-components/ambientSound";
+import { createSphere } from "./components/three-components/createSphere";
 
 let container, object, mixer, particles, plane, meshCube, fontLoader;
 let camera, scene, renderer, clock, composer;
-let controls, water, upperwater, sun, boundary;
-let pointLight, ambientLight;
+let controls, water, upperwater, sun, boundary, sound;
+let pointLight, ambientLight, data;
 let materials, current_material;
 let resolution;
 let effectController;
@@ -124,7 +126,7 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0x55C2D6,
+    sunColor: 0x55c2d6,
     waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
@@ -142,7 +144,7 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0x55C2D6,
+    sunColor: 0x55c2d6,
     waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
@@ -159,6 +161,12 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
+  createSphere(scene, camera);
+
+
+  data = createAmbientSound(camera);
+
+
   boundary = createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
@@ -245,6 +253,8 @@ function render() {
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
+
+  // console.log(data)
 
   boundary.position.y += Math.sin(time * 5) / 3;
 
