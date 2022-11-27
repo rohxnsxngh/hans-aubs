@@ -70,16 +70,6 @@ function init() {
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
   camera.position.set(0, 20, 0);
 
-    //Audio Analyzer
-    ACTX = new AudioContext();
-    ANALYSER = ACTX.createAnalyser();
-    AUDIO = new Audio("./Audio/SomethingWicked.mp3");
-    AUDIO.play();
-    ANALYSER.fftSize = 4 * frequencySamples;
-    ANALYSER.smoothingTimeConstant = 0.5;
-    SOURCE = ACTX.createMediaElementSource(AUDIO);
-    SOURCE.connect(ANALYSER);
-
   const geometry = new THREE.BufferGeometry();
   indices = [];
   heights = [];
@@ -94,7 +84,7 @@ function init() {
       let pow = ((ySegments - j) / ySegments) * yPowMax;
       let y = -Math.pow(yBase, pow) + yHalfSize + 1;
       vertices.push(x, y, 0);
-      heights.push(10); // for now our mesh is flat, so heights are zero
+      heights.push(0); // for now our mesh is flat, so heights are zero
     }
   }
 
@@ -128,7 +118,7 @@ function init() {
     alpha: 1,
   });
   colors[0] = [0, 0, 0, 0];
-  console.log(colors);
+  // console.log(colors);
   const lut = colors.map((color) => {
     const red = color[0] / 255;
     const green = color[1] / 255;
@@ -136,7 +126,7 @@ function init() {
 
     return new THREE.Vector3(red, green, blue);
   });
-  console.log(lut);
+  // console.log(lut);
   //Grab the shaders from the document
   const vShader = document.getElementById("vertexshader");
   const fShader = document.getElementById("fragmentshader");
@@ -187,19 +177,6 @@ function init() {
   const directionalLight = new THREE.DirectionalLight(0xfa1d00, 15);
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
-
-  // const spotLight = new THREE.SpotLight(0xffffff, 15);
-  // spotLight.position.set(-200, 100, -400);
-  // spotLight.castShadow = true;
-  // spotLight.shadow.camera.near = 500;
-  // spotLight.shadow.camera.far = 4000;
-  // spotLight.shadow.camera.fov = 30;
-  // spotLight.shadow.mapSize.width = 400;
-  // spotLight.shadow.mapSize.height = 400;
-  // scene.add(spotLight);
-
-  // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-  // scene.add(spotLightHelper);
 
   setupGui();
 
@@ -287,7 +264,15 @@ function init() {
 
   sound = createAmbientSound(camera, scene, frequencySamples);
 
-  
+  //Audio Analyzer
+  const ACTX = new AudioContext();
+  ANALYSER = ACTX.createAnalyser();
+  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+  AUDIO.play();
+  ANALYSER.fftSize = 4 * frequencySamples;
+  ANALYSER.smoothingTimeConstant = 0.5;
+  const SOURCE = ACTX.createMediaElementSource(AUDIO);
+  SOURCE.connect(ANALYSER);
 
   boundary = createBoundary(scene);
   // createPlane(scene);
@@ -352,7 +337,9 @@ function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
 
-  updateGeometry();
+  if (sound.isPlaying) {
+    updateGeometry();
+  }
 
   //Simplex Noise Sphere
   const remap = [15, 13, 11, 9, 7, 5, 3, 1, 0, 2, 4, 6, 8, 10, 12, 14];
@@ -387,8 +374,6 @@ function render() {
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
-
-  // console.log(data)
 
   boundary.position.y += Math.sin(time * 5) / 3;
 

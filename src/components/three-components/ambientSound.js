@@ -39,13 +39,13 @@ function createAmbientSound(camera, scene, frequencySamples) {
     });
   });
 
-  const ACTX = new AudioContext();
-  const ANALYSER = ACTX.createAnalyser();
-  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
-  ANALYSER.fftSize = 4 * frequencySamples;
-  ANALYSER.smoothingTimeConstant = 0.5;
-  const SOURCE = ACTX.createMediaElementSource(AUDIO);
-  SOURCE.connect(ANALYSER);
+  // const ACTX = new AudioContext();
+  // const ANALYSER = ACTX.createAnalyser();
+  // const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+  // ANALYSER.fftSize = 4 * frequencySamples;
+  // ANALYSER.smoothingTimeConstant = 0.5;
+  // const SOURCE = ACTX.createMediaElementSource(AUDIO);
+  // SOURCE.connect(ANALYSER);
 
   //Audio Analyzer
 
