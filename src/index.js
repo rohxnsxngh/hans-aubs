@@ -84,7 +84,7 @@ function init() {
       let pow = ((ySegments - j) / ySegments) * yPowMax;
       let y = -Math.pow(yBase, pow) + yHalfSize + 1;
       vertices.push(x, y, 0);
-      heights.push(0); // for now our mesh is flat, so heights are zero
+      heights.push(10); // for now our mesh is flat, so heights are zero
     }
   }
 
@@ -262,17 +262,30 @@ function init() {
   createTextLab(scene, fontLoader);
   sphere = createSphere(scene, camera);
 
-  sound = createAmbientSound(camera, scene, frequencySamples);
+  sound = createAmbientSound(camera, frequencySamples, ANALYSER);
+
+  const startButton = document.getElementById("start-experience");
+  startButton.addEventListener("click", function () {
+    const ACTX = new AudioContext();
+    ANALYSER = ACTX.createAnalyser();
+    const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+    AUDIO.play();
+    ANALYSER.fftSize = 4 * frequencySamples;
+    ANALYSER.smoothingTimeConstant = 0.5;
+    const SOURCE = ACTX.createMediaElementSource(AUDIO);
+    SOURCE.connect(ANALYSER);
+    return ANALYSER
+  })
 
   //Audio Analyzer
-  const ACTX = new AudioContext();
-  ANALYSER = ACTX.createAnalyser();
-  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
-  AUDIO.play();
-  ANALYSER.fftSize = 4 * frequencySamples;
-  ANALYSER.smoothingTimeConstant = 0.5;
-  const SOURCE = ACTX.createMediaElementSource(AUDIO);
-  SOURCE.connect(ANALYSER);
+  // const ACTX = new AudioContext();
+  // ANALYSER = ACTX.createAnalyser();
+  // const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+  // AUDIO.play();
+  // ANALYSER.fftSize = 4 * frequencySamples;
+  // ANALYSER.smoothingTimeConstant = 0.5;
+  // const SOURCE = ACTX.createMediaElementSource(AUDIO);
+  // SOURCE.connect(ANALYSER);
 
   boundary = createBoundary(scene);
   // createPlane(scene);

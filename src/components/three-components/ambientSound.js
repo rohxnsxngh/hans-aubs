@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function createAmbientSound(camera, scene, frequencySamples) {
+function createAmbientSound(camera, frequencySamples, ANALYSER) {
   const startButton = document.getElementById("start-experience");
   const audio = document.getElementById("audio");
   // create an AudioListener and add it to the camera
@@ -40,7 +40,7 @@ function createAmbientSound(camera, scene, frequencySamples) {
   });
 
   // const ACTX = new AudioContext();
-  // const ANALYSER = ACTX.createAnalyser();
+  // ANALYSER = ACTX.createAnalyser();
   // const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
   // ANALYSER.fftSize = 4 * frequencySamples;
   // ANALYSER.smoothingTimeConstant = 0.5;
