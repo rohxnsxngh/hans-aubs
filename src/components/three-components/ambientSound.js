@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-async function createAmbientSound(camera) {
+function createAmbientSound(camera, scene) {
   const startButton = document.getElementById("start-experience");
   const audio = document.getElementById("audio");
   // create an AudioListener and add it to the camera
@@ -16,9 +16,9 @@ async function createAmbientSound(camera) {
 
   // get the average frequency of the sound
   const data = analyser.getFrequencyData();
-  // console.log(data)
-  
+
   startButton.addEventListener("click", function () {
+    document.documentElement.requestFullscreen();
     // load a sound and set it as the Audio object's buffer
     const audioLoader = new THREE.AudioLoader();
     audioLoader.load("./Audio/SomethingWicked.mp3", function (buffer) {
@@ -38,7 +38,8 @@ async function createAmbientSound(camera) {
       });
     });
   });
-  return data
+
+  return data;
 }
 
 export { createAmbientSound };

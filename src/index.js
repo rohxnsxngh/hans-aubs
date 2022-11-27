@@ -20,11 +20,13 @@ import { createTextLab } from "./components/three-components/text/textLabs";
 import { createRectLight } from "./components/three-components/createRectLight";
 import { createAmbientSound } from "./components/three-components/ambientSound";
 import { createSphere } from "./components/three-components/createSphere";
+import { math } from "../math";
+import { noise } from "../noise.js";
 
 let container, object, mixer, particles, plane, meshCube, fontLoader;
 let camera, scene, renderer, clock, composer;
-let controls, water, upperwater, sun, boundary, sound;
-let pointLight, ambientLight, data;
+let controls, water, upperwater, sun, boundary, sound, noise1;
+let pointLight, ambientLight, data, sphere;
 let materials, current_material;
 let resolution;
 let effectController;
@@ -116,6 +118,16 @@ function init() {
   //Water
   const waterGeometry = new THREE.PlaneGeometry(20000, 20000);
 
+  noise1 = new noise.Noise({
+    octaves: 3,
+    persistence: 0.5,
+    lacunarity: 1.6,
+    exponentiation: 1.0,
+    height: 1.0,
+    scale: 0.1,
+    seed: 1,
+  });
+
   water = new Water(waterGeometry, {
     textureWidth: 512,
     textureHeight: 512,
@@ -161,11 +173,9 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createSphere(scene, camera);
+  sphere = createSphere(scene, camera);
 
-
-  data = createAmbientSound(camera);
-
+  data = createAmbientSound(camera, scene);
 
   boundary = createBoundary(scene);
   // createPlane(scene);
@@ -229,6 +239,16 @@ function render() {
 
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
+
+  //Simplex Noise Sphere
+  const remap = [15, 13, 11, 9, 7, 5, 3, 1, 0, 2, 4, 6, 8, 10, 12, 14];
+  for (let r = 0; r < data.length; ++r) {
+    for (let i = 0; i < data.length; ++i) {
+      const freqScale = math.smootherstep((data[remap[i]] / 255) ** 0.5, 0, 1);
+      const sc = 1 + 6 * freqScale + noise1.Get(time, r * 0.42142, i * 0.3455);
+      sphere.scale.set(sc * 1.5, sc * 1.5, sc * 1.5);
+    }
+  }
 
   // marching cubes
 

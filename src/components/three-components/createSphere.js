@@ -5,11 +5,12 @@ function createSphere(scene) {
   const edges = new THREE.EdgesGeometry(geometry);
   const line = new THREE.LineSegments(
     edges,
-    new THREE.LineBasicMaterial({ color: 0xffffff })
+    new THREE.LineBasicMaterial({ color: 0x008080 })
   );
-//   const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-//   const sphere = new THREE.Mesh(geometry, material);
-  line.position.set(-100, 20, -300);
+  //   const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+  //   const sphere = new THREE.Mesh(geometry, material);
+  line.position.set(-500, 80, 0)
+  line.geometry.verticesNeedUpdate = true;
   scene.add(line);
   return line;
 }
