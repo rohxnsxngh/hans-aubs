@@ -6,7 +6,7 @@ function createParticles(scene) {
   const vertices = [];
   const sprite = new THREE.TextureLoader().load("/sprites.png");
 
-  for (let i = 0; i < 250000; i++) {
+  for (let i = 0; i < 50000; i++) {
     const x = 3000 * Math.random() - 1000;
     const y = 3000 * Math.random() - 1000;
     const z = 3000 * Math.random() - 1000;

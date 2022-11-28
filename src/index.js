@@ -17,26 +17,14 @@ import { createBoundary } from "./components/three-components/createBoundary";
 import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
-import { createRectLight } from "./components/three-components/createRectLight";
 import { createAmbientSound } from "./components/three-components/ambientSound";
 import { createSphere } from "./components/three-components/createSphere";
-import { math } from "../math";
-import { noise } from "../noise.js";
 import colormap from "colormap";
 
-let container, object, mixer, particles, plane, meshCube, fontLoader;
-let camera, scene, renderer, clock, composer;
-let controls,
-  water,
-  upperwater,
-  sun,
-  boundary,
-  sound,
-  noise1,
-  heights,
-  vertices,
-  mesh;
-let pointLight, ambientLight, sphere, indices, ACTX, ANALYSER, AUDIO, SOURCE;
+let container, particles, meshCube, fontLoader;
+let camera, scene, renderer, clock;
+let controls, water, upperwater, boundary, sound, heights, vertices, mesh;
+let pointLight, ambientLight, sphere, indices, ANALYSER;
 let materials, current_material;
 let resolution;
 let effectController;
@@ -49,7 +37,7 @@ const data = new Uint8Array(frequencySamples);
 const nVertices = (frequencySamples + 1) * (timeSamples + 1);
 let xSegments = timeSamples;
 let ySegments = frequencySamples;
-let xSize = 40;
+let xSize = 80;
 let ySize = 20;
 let xHalfSize = xSize / 2;
 let yHalfSize = ySize / 2;
@@ -111,7 +99,7 @@ function init() {
   );
 
   const colors = colormap({
-    //inferno, electric
+    //inferno, electric, blackbody
     colormap: "electric",
     nshades: 256,
     format: "rgba",
@@ -142,9 +130,10 @@ function init() {
   });
 
   mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(0, 150, -600);
-  mesh.scale.set(30,15,15)
+  mesh.position.set(50, 40, -600);
+  mesh.scale.set(10, 5, 5);
   scene.add(mesh);
+
   //mesh.geometry.computeFaceNormals();
   mesh.geometry.computeVertexNormals();
 
@@ -196,7 +185,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(-600, 50, -290);
+  effect.position.set(-500, 50, 500);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -205,16 +194,6 @@ function init() {
 
   //Water
   const waterGeometry = new THREE.PlaneGeometry(20000, 20000);
-
-  noise1 = new noise.Noise({
-    octaves: 3,
-    persistence: 0.5,
-    lacunarity: 1.6,
-    exponentiation: 1.0,
-    height: 1.0,
-    scale: 0.1,
-    seed: 1,
-  });
 
   water = new Water(waterGeometry, {
     textureWidth: 512,
@@ -261,7 +240,7 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  sphere = createSphere(scene, camera);
+  // sphere = createSphere(scene, camera);
 
   sound = createAmbientSound(camera, frequencySamples, ANALYSER);
 
@@ -275,29 +254,19 @@ function init() {
     ANALYSER.smoothingTimeConstant = 0.5;
     const SOURCE = ACTX.createMediaElementSource(AUDIO);
     SOURCE.connect(ANALYSER);
-    return ANALYSER
-  })
-
-  //Audio Analyzer
-  // const ACTX = new AudioContext();
-  // ANALYSER = ACTX.createAnalyser();
-  // const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
-  // AUDIO.play();
-  // ANALYSER.fftSize = 4 * frequencySamples;
-  // ANALYSER.smoothingTimeConstant = 0.5;
-  // const SOURCE = ACTX.createMediaElementSource(AUDIO);
-  // SOURCE.connect(ANALYSER);
+    return ANALYSER;
+  });
 
   boundary = createBoundary(scene);
   // createPlane(scene);
   particles = createParticles(scene);
-  meshCube = createCube(scene);
+  // meshCube = createCube(scene);
   // createCurve(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
-  createRectLight(scene);
+  // createRectLight(scene);
 
   //Controls
   //First Person Controls
@@ -355,16 +324,6 @@ function render() {
     updateGeometry();
   }
 
-  //Simplex Noise Sphere
-  const remap = [15, 13, 11, 9, 7, 5, 3, 1, 0, 2, 4, 6, 8, 10, 12, 14];
-  for (let r = 0; r < data.length; ++r) {
-    for (let i = 0; i < data.length; ++i) {
-      const freqScale = math.smootherstep((data[remap[i]] / 255) ** 0.5, 0, 1);
-      const sc = 1 + 6 * freqScale + noise1.Get(time, r * 0.42142, i * 0.3455);
-      sphere.scale.set(sc * 1.5, sc * 1.5, sc * 1.5);
-    }
-  }
-
   // marching cubes
 
   if (effectController.resolution !== resolution) {
@@ -385,9 +344,9 @@ function render() {
     effectController.wallz
   );
 
-  meshCube.rotation.z += 0.025;
-  meshCube.rotation.y += 0.025;
-  meshCube.position.y += Math.sin(time * 5) / 1;
+  // meshCube.rotation.z += 0.025;
+  // meshCube.rotation.y += 0.025;
+  // meshCube.position.y += Math.sin(time * 5) / 1;
 
   boundary.position.y += Math.sin(time * 5) / 3;
 
