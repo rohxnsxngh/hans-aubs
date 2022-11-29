@@ -24,7 +24,17 @@ import colormap from "colormap";
 
 let container, particles, meshCube, fontLoader;
 let camera, scene, renderer, clock;
-let controls, water, upperwater, boundary, sound, heights, vertices, mesh, mesh1, mesh2, mesh3;
+let controls,
+  water,
+  upperwater,
+  boundary,
+  sound,
+  heights,
+  vertices,
+  mesh,
+  mesh1,
+  mesh2,
+  mesh3;
 let pointLight, ambientLight, sphere, indices, ANALYSER;
 let materials, current_material;
 let resolution;
@@ -136,21 +146,20 @@ function init() {
   mesh.scale.set(20, 10, 10);
   scene.add(mesh);
 
-  mesh1 = mesh.clone()
+  mesh1 = mesh.clone();
   mesh1.position.set(0, 100, -2000);
   mesh1.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-  scene.add(mesh1)
+  scene.add(mesh1);
 
-  mesh2 = mesh.clone()
+  mesh2 = mesh.clone();
   mesh2.position.set(2000, 100, 0);
   mesh2.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-  scene.add(mesh2)
+  scene.add(mesh2);
 
-  mesh3 = mesh.clone()
+  mesh3 = mesh.clone();
   mesh3.position.set(0, 100, 2000);
   mesh3.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-  scene.add(mesh3)
-
+  scene.add(mesh3);
 
   //mesh.geometry.computeFaceNormals();
   mesh.geometry.computeVertexNormals();
@@ -258,10 +267,10 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-    meshCube = createCube(scene);
+  meshCube = createCube(scene);
   // boundary = createBoundary(scene);
   particles = createParticles(scene);
-  createBackground(scene);
+  // createBackground(scene);
   // sphere = createSphere(scene, camera);
 
   sound = createAmbientSound(camera, frequencySamples, ANALYSER);

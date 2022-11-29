@@ -42,7 +42,7 @@
         v-if="isStarted"
         id="menu"
         src="../assets/menu.png"
-        class="w-6 self-end mt-2 translate-y-1/4 rounded-full invert ring-offset-1 ring ring-orange-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-180"
+        class="w-6 self-end mt-2 translate-y-1/4 rounded-full invert ring-offset-1 ring ring-blue-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-180"
         @click="isStarted = false"
       />
       <button id="audio" class="self-end">
@@ -51,7 +51,7 @@
           @click="isAudio = false"
           id="audio-on"
           src="../assets/audioOn.png"
-          class="w-6 mt-6 rounded-full invert ring-offset-1 ring ring-orange-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-90"
+          class="w-6 mt-6 rounded-full invert ring-offset-1 ring ring-blue-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-90"
         />
         <img
           v-if="!isAudio"
