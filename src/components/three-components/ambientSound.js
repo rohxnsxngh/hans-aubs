@@ -24,7 +24,7 @@ function createAmbientSound(camera, frequencySamples, ANALYSER) {
     audioLoader.load("./Audio/SomethingWicked.mp3", function (buffer) {
       sound.setBuffer(buffer);
       sound.setLoop(true);
-      sound.setVolume(0.25);
+      sound.setVolume(0.75);
       sound.play();
 
       //Pause and Play

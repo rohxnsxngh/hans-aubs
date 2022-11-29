@@ -10,7 +10,7 @@ function createBoundary(scene) {
   });
   const torus = new THREE.Mesh(geometry, material);
   torus.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-  torus.position.set(0, 0, 0)
+  torus.position.set(0, 200, 0)
   scene.add(torus);
   return torus;
 }

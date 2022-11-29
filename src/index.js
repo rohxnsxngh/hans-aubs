@@ -19,11 +19,12 @@ import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
 import { createAmbientSound } from "./components/three-components/ambientSound";
 import { createSphere } from "./components/three-components/createSphere";
+import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
 
 let container, particles, meshCube, fontLoader;
 let camera, scene, renderer, clock;
-let controls, water, upperwater, boundary, sound, heights, vertices, mesh;
+let controls, water, upperwater, boundary, sound, heights, vertices, mesh, mesh1, mesh2, mesh3;
 let pointLight, ambientLight, sphere, indices, ANALYSER;
 let materials, current_material;
 let resolution;
@@ -37,7 +38,7 @@ const data = new Uint8Array(frequencySamples);
 const nVertices = (frequencySamples + 1) * (timeSamples + 1);
 let xSegments = timeSamples;
 let ySegments = frequencySamples;
-let xSize = 80;
+let xSize = 200;
 let ySize = 20;
 let xHalfSize = xSize / 2;
 let yHalfSize = ySize / 2;
@@ -130,9 +131,26 @@ function init() {
   });
 
   mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(50, 40, -600);
-  mesh.scale.set(10, 5, 5);
+  mesh.position.set(-2000, 100, 0);
+  mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+  mesh.scale.set(20, 10, 10);
   scene.add(mesh);
+
+  mesh1 = mesh.clone()
+  mesh1.position.set(0, 100, -2000);
+  mesh1.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+  scene.add(mesh1)
+
+  mesh2 = mesh.clone()
+  mesh2.position.set(2000, 100, 0);
+  mesh2.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+  scene.add(mesh2)
+
+  mesh3 = mesh.clone()
+  mesh3.position.set(0, 100, 2000);
+  mesh3.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+  scene.add(mesh3)
+
 
   //mesh.geometry.computeFaceNormals();
   mesh.geometry.computeVertexNormals();
@@ -185,7 +203,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(-500, 50, 500);
+  effect.position.set(-600, 50, 300);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -240,6 +258,10 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
+    meshCube = createCube(scene);
+  // boundary = createBoundary(scene);
+  particles = createParticles(scene);
+  createBackground(scene);
   // sphere = createSphere(scene, camera);
 
   sound = createAmbientSound(camera, frequencySamples, ANALYSER);
@@ -257,10 +279,6 @@ function init() {
     return ANALYSER;
   });
 
-  boundary = createBoundary(scene);
-  // createPlane(scene);
-  particles = createParticles(scene);
-  // meshCube = createCube(scene);
   // createCurve(scene);
 
   const axesHelper = new THREE.AxesHelper(5);
@@ -344,13 +362,11 @@ function render() {
     effectController.wallz
   );
 
-  // meshCube.rotation.z += 0.025;
-  // meshCube.rotation.y += 0.025;
-  // meshCube.position.y += Math.sin(time * 5) / 1;
+  meshCube.rotation.z += 0.025;
+  meshCube.rotation.y += 0.025;
+  meshCube.position.y += Math.sin(time * 5) / 1;
 
-  boundary.position.y += Math.sin(time * 5) / 3;
-
-  effect.position.y += Math.sin(time * 5) / 2;
+  effect.position.y += Math.sin(time * 5) / 1;
   particles.position.y += Math.sin(time / 4);
 
   // mixer.update( delta );

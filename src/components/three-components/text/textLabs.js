@@ -3,15 +3,15 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 function createTextLab(scene, fontLoader) {
     fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
-    const textGeometryLab = new TextGeometry("<The Forge/>", {
+    const textGeometryLab = new TextGeometry("The Lab", {
       height: 8,
-      size: 26,
+      size: 22,
       font: droidFont,
     });
     const textMaterialLab = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
     const textMeshLab = new THREE.Mesh(textGeometryLab, textMaterialLab);
-    textMeshLab.position.set(-500, 150, 0);
-    textMeshLab.rotateOnAxis(new THREE.Vector3(0, 1, 0), -9.5 * Math.PI / 6);
+    textMeshLab.position.set(-500, 130, 100);
+    textMeshLab.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
     scene.add(textMeshLab);
     return textMeshLab
   });
