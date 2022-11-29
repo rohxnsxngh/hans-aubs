@@ -247,7 +247,7 @@ function init() {
     fog: scene.fog !== undefined,
   });
   upperwater.rotation.x = -Math.PI / 2;
-  upperwater.position.set(0, 200, 0);
+  upperwater.position.set(0, 500, 0);
   upperwater.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   scene.add(upperwater);
 
