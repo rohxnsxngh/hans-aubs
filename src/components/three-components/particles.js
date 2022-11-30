@@ -6,7 +6,7 @@ function createParticles(scene) {
   const vertices = [];
   const sprite = new THREE.TextureLoader().load("/sprites.png");
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 25000; i++) {
     const x = 3000 * Math.random() - 1000;
     const y = 3000 * Math.random() - 1000;
     const z = 3000 * Math.random() - 1000;
@@ -25,7 +25,7 @@ function createParticles(scene) {
     alphaTest: 0.5,
     map: sprite,
     transparent: true,
-    color: 0x9B0CE8,
+    color: 0xFAC407,
   });
 
   const particles = new THREE.Points(geometry, material);

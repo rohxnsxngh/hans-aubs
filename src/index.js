@@ -377,7 +377,9 @@ function render() {
   meshCube.position.y += Math.sin(time * 5) / 1;
 
   effect.position.y += Math.sin(time * 5) / 1;
+
   particles.position.y += Math.sin(time / 4);
+  particles.position.x += Math.sin(time * 10) / 4;
 
   // mixer.update( delta );
   controls.update(delta);

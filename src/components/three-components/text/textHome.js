@@ -19,7 +19,7 @@ function createTextHome(scene, fontLoader) {
         font: droidFont,
       }
     );
-    const textMaterialHome = new THREE.MeshBasicMaterial({ color: 0xFA1D00 });
+    const textMaterialHome = new THREE.MeshBasicMaterial({ color: 0xB501F0});
     const textMeshHome = new THREE.Mesh(textGeometryHome, textMaterialHome);
     textMeshHome.position.set(-100, 150, -500);
     textMeshHome.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0);
