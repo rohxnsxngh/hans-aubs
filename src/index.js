@@ -281,6 +281,7 @@ function init() {
     ANALYSER = ACTX.createAnalyser();
     const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
     AUDIO.play();
+    AUDIO.loop = true;
     ANALYSER.fftSize = 4 * frequencySamples;
     ANALYSER.smoothingTimeConstant = 0.5;
     const SOURCE = ACTX.createMediaElementSource(AUDIO);
