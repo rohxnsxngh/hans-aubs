@@ -8,7 +8,7 @@ function createTextAbout(scene, fontLoader) {
       size: 22,
       font: droidFont,
     });
-    const textMaterialAbout = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
+    const textMaterialAbout = new THREE.MeshBasicMaterial({ color: 0xDB10E6 });
     const textMeshAbout = new THREE.Mesh(textGeometryAbout, textMaterialAbout);
     textMeshAbout.position.set(500, 150, -50);
     textMeshAbout.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);

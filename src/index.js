@@ -27,7 +27,7 @@ let camera, scene, renderer, clock;
 let controls,
   water,
   upperwater,
-  boundary,
+  torus,
   sound,
   heights,
   vertices,
@@ -268,7 +268,7 @@ function init() {
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
   meshCube = createCube(scene);
-  // boundary = createBoundary(scene);
+  torus = createBoundary(scene);
   particles = createParticles(scene);
   // createBackground(scene);
   // sphere = createSphere(scene, camera);
@@ -375,6 +375,31 @@ function render() {
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
   meshCube.position.y += Math.sin(time * 5) / 1;
+
+  torus[0].rotation.y += 0.025;
+  torus[1].rotation.x += 0.025;
+  torus[2].rotation.y -= 0.025;
+  torus[3].rotation.x -= 0.025;
+  //////////////
+  torus[4].rotation.y += 0.025;
+  torus[5].rotation.x += 0.025;
+  torus[6].rotation.y -= 0.025;
+  torus[7].rotation.x -= 0.025;
+  //////////////
+  torus[8].rotation.y += 0.025;
+  torus[9].rotation.x += 0.025;
+
+  torus[0].position.y += Math.sin(time * 8) / 1;
+  torus[1].position.y += Math.sin(time * 8) / 1;
+  torus[2].position.y += Math.sin(time * 8) / 1;
+  torus[3].position.y += Math.sin(time * 8) / 1;
+  torus[4].position.y += Math.sin(time * 8) / 1;
+  torus[5].position.y += Math.sin(time * 8) / 1;
+  torus[6].position.y += Math.sin(time * 8) / 1;
+  torus[7].position.y += Math.sin(time * 8) / 1;
+  torus[8].position.y += Math.sin(time * 8) / 1;
+  torus[9].position.y += Math.sin(time * 8) / 1;
+  torus[10].position.y += Math.sin(time * 8) / 1;
 
   effect.position.y += Math.sin(time * 5) / 1;
 

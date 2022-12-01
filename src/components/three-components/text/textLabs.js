@@ -8,7 +8,7 @@ function createTextLab(scene, fontLoader) {
       size: 22,
       font: droidFont,
     });
-    const textMaterialLab = new THREE.MeshBasicMaterial({ color: 0xfa1d00 });
+    const textMaterialLab = new THREE.MeshBasicMaterial({ color: 0xDB10E6 });
     const textMeshLab = new THREE.Mesh(textGeometryLab, textMaterialLab);
     textMeshLab.position.set(-500, 130, 100);
     textMeshLab.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
