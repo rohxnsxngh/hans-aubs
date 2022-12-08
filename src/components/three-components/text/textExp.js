@@ -9,7 +9,7 @@ function createTextExp(scene, fontLoader) {
       size: 22,
       font: droidFont,
     });
-    const textMaterialExp = new THREE.MeshBasicMaterial({ color: 0xDB10E6 });
+    const textMaterialExp = new THREE.MeshBasicMaterial({ color: 0x5600F5 });
     const textMeshExp = new THREE.Mesh(textGeometryExp, textMaterialExp);
     textMeshExp.position.set(50, 150, 500);
     textMeshExp.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);

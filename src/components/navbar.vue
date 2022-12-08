@@ -49,30 +49,13 @@
               </div>
             </a>
           </div>
-          <div class="float-right">
+          <!-- <div class="float-right">
             <label
               for="credits-drawer"
               class="btn shadow-lg shadow-yellow-500/50 bg-gradient-to-r from-purple-500 via-orange-500 to-yellow-500 hover:from-yellow-500 hover:via-orange-500 hover:to-purple-500 duration-100 text-black my-16 drop-shadow-2xl animate-bounce font-bold"
               >Credits</label
             >
-          </div>
-        </div>
-        <div id="credits-modal" class="z-20">
-          <input type="checkbox" id="credits-modal" class="modal-toggle" />
-          <div class="modal">
-            <div class="modal-box w-11/12 max-w-5xl">
-              <h3 class="font-bold text-lg">
-                Congratulations random Internet user!
-              </h3>
-              <p class="py-4">
-                You've been selected for a chance to get one year of
-                subscription to use Wikipedia for free!
-              </p>
-              <div class="modal-action">
-                <label for="credits-modal" class="btn">Yay!</label>
-              </div>
-            </div>
-          </div>
+          </div> -->
         </div>
         <ControlsInfo />
         <div class="text-center" id="start-experience">

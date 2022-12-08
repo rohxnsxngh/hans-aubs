@@ -301,15 +301,17 @@ function init() {
   controls = new FirstPersonControls(camera, renderer.domElement);
   controls.movementSpeed = 50;
   controls.lookSpeed = 0.025; //0.0075
-  // controls.heightMin = 10;
-  // controls.heightCoef = 10;
+  controls.heightMin = 10;
+  controls.heightCoef = 10;
   controls.heightMax = 120;
-  controls.heightMin = 0;
+  controls.heightMin = 10;
+  controls.verticalMax = 3 * Math.PI / 4
+  controls.verticalMin = Math.PI / 4
   controls.constrainVertical = true;
-  controls.mouseDragOn = false;
-  //controls mouse look around
+  controls.mouseDragOn = true;
+  // controls mouse look around
   controls.activeLook = true;
-  controls.lookVertical = false;
+  controls.lookVertical = true;
 
   //Controls
   // controls = new OrbitControls(camera, renderer.domElement);
@@ -318,6 +320,7 @@ function init() {
   // controls.minDistance = 100;
   // controls.maxDistance = 500;
   // controls.maxPolarAngle = Math.PI / 2;
+
 
   // Resize Window
   window.addEventListener("resize", onWindowResize);
@@ -404,10 +407,16 @@ function render() {
   effect.position.y += Math.sin(time * 5) / 1;
 
   particles.position.y += Math.sin(time / 4);
-  particles.position.x += Math.sin(time * 10) / 4;
+  // particles.position.x += Math.sin(time * 10) / 4;
 
   // mixer.update( delta );
   controls.update(delta);
+  if (camera.position.y < 5) {
+    camera.position.y = 5
+  } 
+  if (camera.position.y > 480) {
+    camera.position.y = 480
+  } 
   renderer.render(scene, camera);
 }
 
