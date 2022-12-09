@@ -58,8 +58,9 @@
           </div> -->
         </div>
         <ControlsInfo />
-        <div class="text-center" id="start-experience">
+        <div class="text-center">
           <button
+            id="start-experience"
             class="btn shadow-lg shadow-yellow-500/50 bg-gradient-to-r from-purple-500 via-orange-500 to-yellow-500 hover:from-yellow-500 hover:via-orange-500 hover:to-purple-500 duration-100 text-black my-16 drop-shadow-2xl animate-bounce font-bold"
             @click="isStarted = true"
           >
