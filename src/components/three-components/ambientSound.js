@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function createAmbientSound(camera, frequencySamples, ANALYSER) {
+function createAmbientSound(camera) {
   const startButton = document.getElementById("start-experience");
   const audio = document.getElementById("audio");
   // create an AudioListener and add it to the camera

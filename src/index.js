@@ -41,6 +41,7 @@ let resolution;
 let effectController;
 let effect;
 let time = 0;
+let count = 0;
 
 const frequencySamples = 256;
 const timeSamples = 400;
@@ -273,13 +274,14 @@ function init() {
   // createBackground(scene);
   // sphere = createSphere(scene, camera);
 
-  sound = createAmbientSound(camera, frequencySamples, ANALYSER);
+  sound = createAmbientSound(camera);
+  const audio = document.getElementById("audio");
+  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+  const ACTX = new AudioContext();
 
   const startButton = document.getElementById("start-experience");
   startButton.addEventListener("click", function () {
-    const ACTX = new AudioContext();
     ANALYSER = ACTX.createAnalyser();
-    const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
     AUDIO.play();
     AUDIO.loop = true;
     ANALYSER.fftSize = 4 * frequencySamples;
@@ -287,6 +289,16 @@ function init() {
     const SOURCE = ACTX.createMediaElementSource(AUDIO);
     SOURCE.connect(ANALYSER);
     return ANALYSER;
+  });
+
+  // //Pause and Play
+  audio.addEventListener("click", function () {
+    count += 1;
+    if (count % 2 != 0) {
+      AUDIO.pause();
+    } else {
+      AUDIO.play();
+    }
   });
 
   // createCurve(scene);
@@ -305,8 +317,8 @@ function init() {
   controls.heightCoef = 10;
   controls.heightMax = 120;
   controls.heightMin = 10;
-  controls.verticalMax = 3 * Math.PI / 4
-  controls.verticalMin = Math.PI / 4
+  controls.verticalMax = (3 * Math.PI) / 4;
+  controls.verticalMin = Math.PI / 4;
   controls.constrainVertical = true;
   controls.mouseDragOn = true;
   // controls mouse look around
@@ -320,7 +332,6 @@ function init() {
   // controls.minDistance = 100;
   // controls.maxDistance = 500;
   // controls.maxPolarAngle = Math.PI / 2;
-
 
   // Resize Window
   window.addEventListener("resize", onWindowResize);
@@ -412,11 +423,11 @@ function render() {
   // mixer.update( delta );
   controls.update(delta);
   if (camera.position.y < 5) {
-    camera.position.y = 5
-  } 
+    camera.position.y = 5;
+  }
   if (camera.position.y > 480) {
-    camera.position.y = 480
-  } 
+    camera.position.y = 480;
+  }
   renderer.render(scene, camera);
 }
 
