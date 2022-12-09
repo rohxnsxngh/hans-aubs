@@ -7,8 +7,8 @@ function createCube(scene) {
   const geometryCube = new THREE.IcosahedronGeometry(0.5, 3);
   const materialCube = new THREE.MeshPhongMaterial({
     color: 0x000000,
-    emissive: 0x7F2FD4,
-    specular: 0x7F2FD4,
+    emissive: 0xF52300,
+    specular: 0xffffff,
     shininess: 30,
   });
 
@@ -30,8 +30,8 @@ function createCube(scene) {
       }
     }
   }
-  meshCube.scale.set(7.5, 7.5, 7.5);
-  meshCube.position.set(-500, 80, 50);
+  meshCube.scale.set(12, 12, 12);
+  meshCube.position.set(-500, 80, 100);
   scene.add(meshCube);
   return meshCube;
 }

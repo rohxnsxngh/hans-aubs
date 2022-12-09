@@ -18,11 +18,12 @@ import { createTextAbout } from "./components/three-components/text/textAbout";
 import { createTextExp } from "./components/three-components/text/textExp";
 import { createTextLab } from "./components/three-components/text/textLabs";
 import { createAmbientSound } from "./components/three-components/ambientSound";
+import { createTorusKnot } from "./components/three-components/createTorusKnot";
 import { createSphere } from "./components/three-components/createSphere";
 import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
 
-let container, particles, meshCube, fontLoader;
+let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
 let controls,
   water,
@@ -213,7 +214,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(-600, 50, 300);
+  effect.position.set(-600, 50, 400);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -263,6 +264,7 @@ function init() {
 
   fontLoader = new FontLoader();
 
+  torusKnot = createTorusKnot(scene);
   updateSun(scene, water, renderer);
   createTextHome(scene, fontLoader);
   createTextAbout(scene, fontLoader);
@@ -296,8 +298,10 @@ function init() {
     count += 1;
     if (count % 2 != 0) {
       AUDIO.pause();
+      sound.pause();
     } else {
       AUDIO.play();
+      sound.play();
     }
   });
 
@@ -385,6 +389,10 @@ function render() {
     effectController.wallx,
     effectController.wallz
   );
+
+  torusKnot.rotation.z += 0.045;
+  torusKnot.rotation.y += 0.045;
+  torusKnot.position.y += Math.sin(time * 5) / 1;
 
   meshCube.rotation.z += 0.025;
   meshCube.rotation.y += 0.025;
