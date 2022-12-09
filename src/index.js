@@ -278,11 +278,11 @@ function init() {
 
   sound = createAmbientSound(camera);
   const audio = document.getElementById("audio");
-  const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
-  const ACTX = new AudioContext();
 
   const startButton = document.getElementById("start-experience");
   startButton.addEventListener("click", function () {
+    const AUDIO = new Audio("./Audio/SomethingWicked.mp3");
+    const ACTX = new AudioContext();
     ANALYSER = ACTX.createAnalyser();
     AUDIO.play();
     AUDIO.loop = true;
@@ -290,19 +290,18 @@ function init() {
     ANALYSER.smoothingTimeConstant = 0.5;
     const SOURCE = ACTX.createMediaElementSource(AUDIO);
     SOURCE.connect(ANALYSER);
-    return ANALYSER;
-  });
+    // //Pause and Play
+    audio.addEventListener("click", function () {
+      count += 1;
+      if (count % 2 != 0) {
+        AUDIO.pause();
+      } else {
+        AUDIO.play();
+      }
+    });
 
-  // //Pause and Play
-  audio.addEventListener("click", function () {
-    count += 1;
-    if (count % 2 != 0) {
-      AUDIO.pause();
-      sound.pause();
-    } else {
-      AUDIO.play();
-      sound.play();
-    }
+
+    return ANALYSER;
   });
 
   // createCurve(scene);

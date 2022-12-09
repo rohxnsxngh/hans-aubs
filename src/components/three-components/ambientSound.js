@@ -27,15 +27,15 @@ function createAmbientSound(camera) {
       sound.setVolume(0.75);
       sound.play();
 
-      //Pause and Play
-      // audio.addEventListener("click", function () {
-      //   count += 1;
-      //   if (count % 2 != 0) {
-      //     sound.pause();
-      //   } else {
-      //     sound.play();
-      //   }
-      // });
+      // Pause and Play
+      audio.addEventListener("click", function () {
+        count += 1;
+        if (count % 2 != 0) {
+          sound.pause();
+        } else {
+          sound.play();
+        }
+      });
     });
   });
 
