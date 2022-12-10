@@ -9,7 +9,7 @@ function createAmbientSound(camera) {
   let count = 0;
 
   // create a global audio source
-  const sound = new THREE.Audio(listener);
+  const sound = new THREE.PositionalAudio(listener);
 
   // create an AudioAnalyser, passing in the sound and desired fftSize
   const analyser = new THREE.AudioAnalyser(sound, 32);
@@ -25,6 +25,8 @@ function createAmbientSound(camera) {
       sound.setBuffer(buffer);
       sound.setLoop(true);
       sound.setVolume(0.75);
+      sound.setRefDistance( 20 );
+      // sound.setRolloffFactor( 0.5 )
       sound.play();
 
       // Pause and Play

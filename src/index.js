@@ -22,6 +22,7 @@ import { createTorusKnot } from "./components/three-components/createTorusKnot";
 import { createSphere } from "./components/three-components/createSphere";
 import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
+import { PositionalAudio } from "three";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -308,6 +309,8 @@ function init() {
 
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
+
+  axesHelper.add(sound)
 
   // createRectLight(scene);
 
