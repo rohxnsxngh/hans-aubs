@@ -144,23 +144,23 @@ function init() {
   });
 
   mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(-2000, 100, 0);
+  mesh.position.set(-2000, 90, 0);
   mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
   mesh.scale.set(20, 10, 10);
   scene.add(mesh);
 
   mesh1 = mesh.clone();
-  mesh1.position.set(0, 100, -2000);
+  mesh1.position.set(0, 90, -2000);
   mesh1.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
   scene.add(mesh1);
 
   mesh2 = mesh.clone();
-  mesh2.position.set(2000, 100, 0);
+  mesh2.position.set(2000, 90, 0);
   mesh2.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   scene.add(mesh2);
 
   mesh3 = mesh.clone();
-  mesh3.position.set(0, 100, 2000);
+  mesh3.position.set(0, 90, 2000);
   mesh3.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
   scene.add(mesh3);
 
@@ -235,8 +235,8 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0x55c2d6,
-    waterColor: 0x000000,
+    sunColor: 0xffffff,
+    waterColor: 0x290275,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,
   });
@@ -253,7 +253,7 @@ function init() {
       }
     ),
     sunDirection: new THREE.Vector3(),
-    sunColor: 0x55c2d6,
+    sunColor: 0xffffff,
     waterColor: 0x000000,
     distortionScale: 3.7,
     fog: scene.fog !== undefined,

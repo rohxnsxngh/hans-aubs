@@ -83,7 +83,7 @@
           @click="isAudio = false"
           id="audio-on"
           src="../assets/audioOn.png"
-          class="w-12 sm:w-6 mt-6 rounded-full invert ring-offset-1 ring ring-blue-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-90"
+          class="w-12 sm:w-6 mt-6 rounded-full invert ring-offset-1 ring ring-blue-500 ease-in duration-300 cursor-pointer hover:invert-0 hover:rotate-90 animate-bounce"
         />
         <img
           v-if="!isAudio"
