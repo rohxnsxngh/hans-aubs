@@ -22,6 +22,7 @@ import { createTorusKnot } from "./components/three-components/createTorusKnot";
 import { createSphere } from "./components/three-components/createSphere";
 import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
+import { createCapsule } from "./components/three-components/createCapsule";
 import { PositionalAudio } from "three";
 
 let container, particles, meshCube, torusKnot, fontLoader;
@@ -70,7 +71,7 @@ function init() {
     20000
   );
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
-  camera.position.set(0, 20, 0);
+  camera.position.set(0, 50, 0);
 
   const geometry = new THREE.BufferGeometry();
   indices = [];
@@ -215,7 +216,7 @@ function init() {
     true,
     100000
   );
-  effect.position.set(-600, 50, 400);
+  effect.position.set(-500, 50, 300);
   effect.scale.set(60, 80, 60);
   scene.add(effect);
 
@@ -271,6 +272,7 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
+  createCapsule(scene);
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);

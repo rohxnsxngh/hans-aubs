@@ -3,7 +3,7 @@
     <div
       v-if="!isStarted"
       id="navbar"
-      class="bg-purple-300 ease-in-out p-4 opacity-95 h-[70rem] w-full justify-center duration-700"
+      class="bg-gray-700 ease-in-out p-4 opacity-95 h-[70rem] w-full justify-center duration-700"
     >
       <div>
         <div class="columns-2">
@@ -14,7 +14,7 @@
               >
                 <img
                   src="../assets/github.png"
-                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50"
+                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg"
                 /><img />
               </div>
             </a>
@@ -24,7 +24,7 @@
               >
                 <img
                   src="../assets/linkedin.png"
-                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50"
+                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg"
                 /><img />
               </div>
             </a>
@@ -34,7 +34,7 @@
               >
                 <img
                   src="../assets/email.png"
-                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50"
+                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg"
                 /><img />
               </div>
             </a>
@@ -44,18 +44,11 @@
               >
                 <img
                   src="../assets/instagram.png"
-                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50"
+                  class="w-12 sm:w-6 mb-10 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg"
                 /><img />
               </div>
             </a>
           </div>
-          <!-- <div class="float-right">
-            <label
-              for="credits-drawer"
-              class="btn shadow-lg shadow-yellow-500/50 bg-gradient-to-r from-purple-500 via-orange-500 to-yellow-500 hover:from-yellow-500 hover:via-orange-500 hover:to-purple-500 duration-100 text-black my-16 drop-shadow-2xl animate-bounce font-bold"
-              >Credits</label
-            >
-          </div> -->
         </div>
         <ControlsInfo />
         <div class="text-center">
@@ -69,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col px-4">
+    <div class="flex flex-col px-4 ease-in-out duration-700">
       <img
         v-if="isStarted"
         id="menu"

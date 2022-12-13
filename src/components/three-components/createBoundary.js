@@ -14,7 +14,7 @@ function createBoundary(scene) {
     const geometry = new THREE.TorusGeometry(100 - (10 * i), 5, 20, 60);
     torus = new THREE.Mesh(geometry, material);
     torus.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI/4);
-    torus.position.set(-600, 150, -300)
+    torus.position.set(-800, 120, -300)
     // torus.material.specular.setHex(0xffffff * Math.random())
     scene.add(torus);
     torusCollection.push(torus)
