@@ -23,7 +23,7 @@ import { createSphere } from "./components/three-components/createSphere";
 import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
 import { createCapsule } from "./components/three-components/createCapsule";
-import { PositionalAudio } from "three";
+import { createPortal } from "./components/three-components/createPortal";;
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -45,6 +45,7 @@ let effectController;
 let effect;
 let time = 0;
 let count = 0;
+let objects = [];
 
 const frequencySamples = 256;
 const timeSamples = 400;
@@ -224,7 +225,7 @@ function init() {
   clock = new THREE.Clock();
 
   //Water
-  const waterGeometry = new THREE.PlaneGeometry(20000, 20000);
+  const waterGeometry = new THREE.PlaneGeometry(5000, 5000);
 
   water = new Water(waterGeometry, {
     textureWidth: 512,
@@ -272,10 +273,11 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createCapsule(scene, -500, 0, 0x07E8EB, 1.2);
-  createCapsule(scene, -800, -300, 0xDB0A00, 2);
-  createCapsule(scene, -800, 200, 0xF54900, 1.5);
-  createCapsule(scene, -500, 300, 0xE8DCCA, 2);
+  createCapsule(scene, -500, 0, 0x0084db, 1.2);
+  createCapsule(scene, -800, -300, 0xdb0a00, 2);
+  createCapsule(scene, -800, 200, 0xf52300, 1.5);
+  createCapsule(scene, -500, 300, 0xe8dcca, 2);
+  createPortal(scene)
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
@@ -306,7 +308,6 @@ function init() {
       }
     });
 
-
     return ANALYSER;
   });
 
@@ -315,7 +316,7 @@ function init() {
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
-  axesHelper.add(sound)
+  axesHelper.add(sound);
 
   // createRectLight(scene);
 
@@ -443,6 +444,18 @@ function render() {
   if (camera.position.y > 480) {
     camera.position.y = 480;
   }
+  if (
+    camera.position.x > 3000 ||
+    camera.position.x < -3000 ||
+    camera.position.z < -3000 ||
+    camera.position.z > 3000
+  ) {
+    camera.position.set(0, 50, 0);
+  }
+  // if (camera.position.x > -50 && camera.position.x < 50 && camera.position.z < -495 && camera.position.z > -505)  {
+  //   camera.position.set(0,10000,10000)
+  // }
+  // console.log(camera.position.z)
   renderer.render(scene, camera);
 }
 
