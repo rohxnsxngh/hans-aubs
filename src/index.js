@@ -272,7 +272,10 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createCapsule(scene);
+  createCapsule(scene, -500, 0, 0x07E8EB, 1.2);
+  createCapsule(scene, -800, -300, 0xDB0A00, 2);
+  createCapsule(scene, -800, 200, 0xF54900, 1.5);
+  createCapsule(scene, -500, 300, 0xE8DCCA, 2);
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);

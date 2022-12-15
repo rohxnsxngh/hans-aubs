@@ -10,15 +10,15 @@
         class="hidden mx-24 tablet:flex text-black place-content-center laptop:mx-96"
       >
         <div class="flex hover:animate-ping">
-          <img src="../assets/wasdKeys.png" class="w-24 object-contain mx-8 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg" />
+          <img src="../assets/wasdKeys.png" class="w-24 object-contain mx-8 rounded-bl-lg rounded-br-lg" />
         </div>
         <div class="flex hover:animate-ping">
-          <img src="../assets/mouse.png" class="w-24 object-contain mx-8 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg" />
+          <img src="../assets/mouse.png" class="w-24 object-contain mx-8 rounded-bl-lg rounded-br-lg" />
         </div>
         <div class="flex hover:animate-ping">
           <img
             src="../assets/headphones.png"
-            class="w-24 object-contain mx-8 shadow-lg shadow-yellow-500/50 rounded-bl-lg rounded-br-lg"
+            class="w-24 object-contain mx-8 rounded-bl-lg rounded-br-lg"
           />
         </div>
       </div>
