@@ -23,7 +23,7 @@ import { createSphere } from "./components/three-components/createSphere";
 import { createBackground } from "./components/three-components/createBackground";
 import colormap from "colormap";
 import { createCapsule } from "./components/three-components/createCapsule";
-import { createPortal } from "./components/three-components/createPortal";;
+import { createPortal } from "./components/three-components/createPortal";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -277,7 +277,7 @@ function init() {
   createCapsule(scene, -800, -300, 0xdb0a00, 2);
   createCapsule(scene, -800, 200, 0xf52300, 1.5);
   createCapsule(scene, -500, 300, 0xe8dcca, 2);
-  createPortal(scene)
+  createPortal(scene);
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
@@ -452,10 +452,35 @@ function render() {
   ) {
     camera.position.set(0, 50, 0);
   }
-  // if (camera.position.x > -50 && camera.position.x < 50 && camera.position.z < -495 && camera.position.z > -505)  {
-  //   camera.position.set(0,10000,10000)
-  // }
-  // console.log(camera.position.z)
+  if (
+    camera.position.x > -50 &&
+    camera.position.x < 50 &&
+    camera.position.z < -495 &&
+    camera.position.z > -505
+  ) {
+    sound.stop();
+    // scene.remove.apply(scene, scene.children);
+    // renderer.renderLists.dispose();
+    // scene.clear()
+    console.log(scene);
+
+    for (let i = 0; i < scene.children.length; i++) {
+      if (scene.children[i].isMesh || scene.children[i].isPoints || scene.children[i].isPoints) {
+        scene.children[i].geometry.dispose();
+        scene.children[i].material.dispose();
+        scene.remove(scene.children[i]);
+      } 
+    }
+    renderer.renderLists.dispose();
+
+    console.log("Scene Polycount:", renderer.info.render.triangles);
+    console.log("Active Drawcalls:", renderer.info.render.calls);
+    console.log("Textures in Memory", renderer.info.memory.textures);
+    console.log("Geometries in Memory", renderer.info.memory.geometries);
+
+    document.getElementById("container").style.visibility = "hidden"
+    document.getElementById("container2").style.visibility = "visible"
+  }
   renderer.render(scene, camera);
 }
 
@@ -517,4 +542,14 @@ function updateCubes(object, time, numblobs, floor, wallx, wallz) {
   if (wallx) object.addPlaneX(2, 12);
 
   object.update();
+}
+
+function removeCells() {
+  somearray.map((i) => {
+    const object = scene.getObjectByProperty("uuid", i);
+
+    object.geometry.dispose();
+    object.material.dispose();
+    scene.remove(object);
+  });
 }
