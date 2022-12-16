@@ -277,7 +277,7 @@ function init() {
   createCapsule(scene, -800, -300, 0xdb0a00, 2);
   createCapsule(scene, -800, 200, 0xf52300, 1.5);
   createCapsule(scene, -500, 300, 0xe8dcca, 2);
-  createPortal(scene)
+  // createPortal(scene)
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
