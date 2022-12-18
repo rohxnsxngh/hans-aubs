@@ -445,10 +445,10 @@ function render() {
     camera.position.y = 480;
   }
   if (
-    camera.position.x > 3000 ||
-    camera.position.x < -3000 ||
-    camera.position.z < -3000 ||
-    camera.position.z > 3000
+    camera.position.x > 2000 ||
+    camera.position.x < -2000 ||
+    camera.position.z < -2000 ||
+    camera.position.z > 2000
   ) {
     camera.position.set(0, 50, 0);
   }
