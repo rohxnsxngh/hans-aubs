@@ -47,7 +47,9 @@ function animate() {
   mesh.rotation.x += 0.005;
   mesh.rotation.y += 0.01;
 
-  renderer.render(scene, camera);
+  if (document.getElementById("container2").style.visibility !== "hidden") {
+    renderer.render(scene, camera);
+  }
 }
 
 console.log("Scene Polycount:", renderer.info.render.triangles);
