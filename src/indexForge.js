@@ -3,27 +3,22 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls.js";
 import { Water } from "three/examples/jsm/objects/Water.js";
-import { Sky } from "three/examples/jsm/objects/Sky.js";
-import { createCurve } from "./components/three-components/curve";
-import { spaceBoi } from "./components/three-components/spaceboi";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
-import { createTextHome } from "./components/three-components/text/textHome";
-import { createParticles } from "./components/three-components/particles";
-import { createCube } from "./components/three-components/cube";
-import { updateSun } from "./components/three-components/updateSun";
-import { generateMaterials } from "./components/three-components/generateMaterials";
-import { createBoundary } from "./components/three-components/createBoundary";
-import { createTextAbout } from "./components/three-components/text/textAbout";
-import { createTextExp } from "./components/three-components/text/textExp";
-import { createTextLab } from "./components/three-components/text/textLabs";
-import { createAmbientSound } from "./components/three-components/ambientSound";
-import { createTorusKnot } from "./components/three-components/createTorusKnot";
-import { createSphere } from "./components/three-components/createSphere";
-import { createBackground } from "./components/three-components/createBackground";
+import { createTextHome } from "./components/three-components/forge/text/textHome";
+import { createParticles } from "./components/three-components/forge/particles";
+import { createCube } from "./components/three-components/forge/cube";
+import { updateSun } from "./components/three-components/forge/updateSun";
+import { generateMaterials } from "./components/three-components/forge/generateMaterials";
+import { createBoundary } from "./components/three-components/forge/createBoundary";
+import { createTextAbout } from "./components/three-components/forge/text/textAbout";
+import { createTextExp } from "./components/three-components/forge/text/textExp";
+import { createTextLab } from "./components/three-components/forge/text/textLabs";
+import { createAmbientSound } from "./components/three-components/forge/ambientSound";
+import { createTorusKnot } from "./components/three-components/forge/createTorusKnot";
 import colormap from "colormap";
-import { createCapsule } from "./components/three-components/createCapsule";
-import { createPortal } from "./components/three-components/createPortal";
+import { createCapsule } from "./components/three-components/forge/createCapsule";
+import { createPortal } from "./components/three-components/forge/createPortal";
+import { disposeWorld } from "./components/three-components/disposeScene/disposeWorld";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -273,10 +268,10 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createCapsule(scene, -500, 0, 0x0084db, 1.2);
-  createCapsule(scene, -800, -300, 0xdb0a00, 2);
-  createCapsule(scene, -800, 200, 0xf52300, 1.5);
-  createCapsule(scene, -500, 300, 0xe8dcca, 2);
+  createCapsule(scene, -500, 0, 0x000000, 1.2);
+  createCapsule(scene, -800, -300, 0x000000, 2);
+  createCapsule(scene, -800, 200, 0x000000, 1.5);
+  createCapsule(scene, -500, 300, 0x000000, 2);
   createPortal(scene);
   meshCube = createCube(scene);
   torus = createBoundary(scene);
@@ -459,67 +454,11 @@ function render() {
     camera.position.z > -505
   ) {
     sound.stop();
-    // scene.remove.apply(scene, scene.children);
-    // renderer.renderLists.dispose();
-    // scene.clear()
-    console.log(scene);
-
-    for (let i = 0; i < scene.children.length; i++) {
-      if (
-        scene.children[i].isMesh ||
-        scene.children[i].isPoints ||
-        scene.children[i].isLine
-      ) {
-        scene.children[i].geometry.dispose();
-        // scene.children[i].material.dispose();
-        if (scene.children[i].material.map)
-          scene.children[i].material.map.dispose();
-        if (scene.children[i].material.lightMap)
-          scene.children[i].material.lightMap.dispose();
-        if (scene.children[i].material.bumpMap)
-          scene.children[i].material.bumpMap.dispose();
-        if (scene.children[i].material.normalMap)
-          scene.children[i].material.normalMap.dispose();
-        if (scene.children[i].material.specularMap)
-          scene.children[i].material.specularMap.dispose();
-        if (scene.children[i].material.envMap)
-          scene.children[i].material.envMap.dispose();
-        if (scene.children[i].material.alphaMap)
-          scene.children[i].material.alphaMap.dispose();
-        if (scene.children[i].material.aoMap)
-          scene.children[i].material.aoMap.dispose();
-        if (scene.children[i].material.displacementMap)
-          scene.children[i].material.displacementMap.dispose();
-        if (scene.children[i].material.emissiveMap)
-          scene.children[i].material.emissiveMap.dispose();
-        if (scene.children[i].material.gradientMap)
-          scene.children[i].material.gradientMap.dispose();
-        if (scene.children[i].material.metalnessMap)
-          scene.children[i].material.metalnessMap.dispose();
-        if (scene.children[i].material.roughnessMap)
-          scene.children[i].material.roughnessMap.dispose();
-
-        scene.remove(scene.children[i]);
-      } else {
-        if (scene.children[i].map) scene.children[i].map.dispose();
-        if (scene.children[i].lightMap) scene.children[i].lightMap.dispose();
-        if (scene.children[i].bumpMap) scene.children[i].bumpMap.dispose();
-        if (scene.children[i].normalMap) scene.children[i].normalMap.dispose();
-        if (scene.children[i].specularMap) scene.children[i].specularMap.dispose();
-        if (scene.children[i].envMap) scene.children[i].envMap.dispose();
-        if (scene.children[i].alphaMap) scene.children[i].alphaMap.dispose();
-        if (scene.children[i].aoMap) scene.children[i].aoMap.dispose();
-        if (scene.children[i].displacementMap)
-          scene.children[i].displacementMap.dispose();
-        if (scene.children[i].emissiveMap) scene.children[i].emissiveMap.dispose();
-        if (scene.children[i].gradientMap) scene.children[i].gradientMap.dispose();
-        if (scene.children[i].metalnessMap) scene.children[i].metalnessMap.dispose();
-        if (scene.children[i].roughnessMap) scene.children[i].roughnessMap.dispose();
-
-        scene.children[i].dispose();
-      }
-    }
+    disposeWorld(scene);
     renderer.renderLists.dispose();
+    scene.environment.dispose()
+    scene.fog = null;
+    renderer.dispose()
 
     console.log("Scene Polycount:", renderer.info.render.triangles);
     console.log("Active Drawcalls:", renderer.info.render.calls);
@@ -527,8 +466,8 @@ function render() {
     console.log("Geometries in Memory", renderer.info.memory.geometries);
     console.log(scene);
 
-    document.getElementById("container").style.visibility = "hidden"
-    document.getElementById("container2").style.visibility = "visible"
+    document.getElementById("container").style.visibility = "hidden";
+    document.getElementById("container2").style.visibility = "visible";
   }
   renderer.render(scene, camera);
 }

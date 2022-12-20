@@ -5,9 +5,9 @@ function createBoundary(scene) {
   let torusCollection = [];
   const material = new THREE.MeshPhongMaterial({
     color: 0x000000,
-    emissive: 0x000000, //change color
-    specular: 0xFA1200,
-    shininess: 30,
+    emissive: 0x6101F5,
+    specular: 0xffffff,
+    shininess: 15,
   });
   
   for (let i = 0; i < 11; i++) {
