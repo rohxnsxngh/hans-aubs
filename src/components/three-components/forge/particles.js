@@ -25,7 +25,8 @@ function createParticles(scene) {
     alphaTest: 0.5,
     map: sprite,
     transparent: true,
-    color: 0x8A00F5,
+    // color: 0x8A00F5,
+    color: 0xFFFFFF,
   });
 
   const particles = new THREE.Points(geometry, material);

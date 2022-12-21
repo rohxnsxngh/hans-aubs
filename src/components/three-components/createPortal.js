@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function createPortal(scene) {
+function createPortal(scene, x, y, z, scale) {
   const color = new THREE.Color();
   const geometryTorus = new THREE.TorusGeometry(125, 7, 16, 100);
   const materialTorus = new THREE.MeshPhongMaterial({
@@ -10,8 +10,17 @@ function createPortal(scene) {
     shininess: 15,
   });
   const torus = new THREE.Mesh(geometryTorus, materialTorus);
-  torus.position.set(0, 0, 50);
+  torus.position.set(x + 10, y, z);
+  torus.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+  torus.scale.set(0.4, 0.4, 0.4)
   scene.add(torus);
+
+  // const geometryCylinder = new THREE.CylinderGeometry(125, 5, 30, 32);
+  // const materialCylinder = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+  // const cylinder = new THREE.Mesh(geometryCylinder, materialCylinder);
+  // cylinder.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+  // cylinder.position.set(0, 0, 50);
+  // scene.add(cylinder);
 
   const geometry = new THREE.CircleGeometry(30, 32);
   const material = new THREE.MeshBasicMaterial({
@@ -29,7 +38,8 @@ function createPortal(scene) {
     portalMesh.setMatrixAt(p, matrix);
     portalMesh.setColorAt(p, color.setHex(Math.random() * 0xffffff));
   }
-  portalMesh.scale.set(0.25, 0.25, 0.25);
+  portalMesh.position.set(x, y, z);
+  portalMesh.scale.set(scale, scale, scale);
   scene.add(portalMesh);
   return portalMesh;
 }

@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { createPortal } from "./components/three-components/createPortal";
 
 let camera, scene, renderer, container;
 let mesh, controls, clock, directionalLight, portalParticles;
@@ -37,7 +36,11 @@ function init() {
   directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
   directionalLight.position.set(0, 0, 1);
   scene.add(directionalLight);
-  portalParticles = createPortal(scene);
+
+  const geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+  const cylinder = new THREE.Mesh(geometry, material);
+  scene.add(cylinder);
 
   //
   controls = new OrbitControls(camera, renderer.domElement);
@@ -67,7 +70,6 @@ function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
 
-  portalParticles.rotation.z -= delta * 1.5;
   controls.update(delta);
   if (document.getElementById("container2").style.visibility == "visible") {
     renderer.render(scene, camera);

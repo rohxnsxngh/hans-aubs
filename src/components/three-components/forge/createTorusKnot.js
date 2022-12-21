@@ -11,7 +11,7 @@ function createTorusKnot(scene) {
   const torusKnot = new THREE.Mesh(geometry, material);
   torusKnot.scale.set(50, 50, 50);
   torusKnot.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-  torusKnot.position.set(-500, 80, 0);
+  torusKnot.position.set(-500, 80, -300);
   scene.add(torusKnot);
   return torusKnot
 }

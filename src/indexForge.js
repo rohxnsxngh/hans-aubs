@@ -17,8 +17,9 @@ import { createAmbientSound } from "./components/three-components/forge/ambientS
 import { createTorusKnot } from "./components/three-components/forge/createTorusKnot";
 import colormap from "colormap";
 import { createCapsule } from "./components/three-components/forge/createCapsule";
-import { createPortal } from "./components/three-components/forge/createPortal";
+// import { createPortal } from "./components/three-components/forge/createPortal";
 import { disposeWorld } from "./components/three-components/disposeScene/disposeWorld";
+import { createPortal } from "./components/three-components/createPortal";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -32,7 +33,8 @@ let controls,
   mesh,
   mesh1,
   mesh2,
-  mesh3;
+  mesh3,
+  portalMesh;
 let pointLight, ambientLight, sphere, indices, ANALYSER;
 let materials, current_material;
 let resolution;
@@ -223,7 +225,7 @@ function init() {
   clock = new THREE.Clock();
 
   //Water
-  const waterGeometry = new THREE.PlaneGeometry(5000, 5000);
+  const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
 
   water = new Water(waterGeometry, {
     textureWidth: 512,
@@ -272,13 +274,16 @@ function init() {
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
   createCapsule(scene, -500, 0, 0x000000, 1.2);
-  createCapsule(scene, -800, -300, 0x000000, 2);
+  createCapsule(scene, -800, -250, 0x000000, 2);
   createCapsule(scene, -800, 200, 0x000000, 1.5);
   createCapsule(scene, -500, 300, 0x000000, 2);
-  createPortal(scene);
+  createCapsule(scene, -500, -300, 0x000000, 1.2);
+  // createPortal(scene)
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
+  portalMesh = createPortal(scene, -500, 75, 0, 0.1)
+  portalMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 
   sound = createAmbientSound(camera);
   const audio = document.getElementById("audio");
@@ -422,6 +427,8 @@ function render() {
   torus[9].position.y += Math.sin(time * 8) / 1;
   torus[10].position.y += Math.sin(time * 8) / 1;
 
+  portalMesh.rotation.z -= delta * 1.5;
+
   effect.position.y += Math.sin(time * 5) / 1;
 
   particles.position.y += Math.sin(time / 4);
@@ -429,25 +436,30 @@ function render() {
 
   // mixer.update( delta );
   controls.update(delta);
+  //Min Height
   if (camera.position.y < 5) {
     camera.position.y = 5;
   }
+  //Max Height
   if (camera.position.y > 480) {
     camera.position.y = 480;
   }
+  //Max explorable distance
   if (
-    camera.position.x > 2000 ||
-    camera.position.x < -2000 ||
-    camera.position.z < -2000 ||
-    camera.position.z > 2000
+    camera.position.x > 3000 ||
+    camera.position.x < -3000 ||
+    camera.position.z < -3000 ||
+    camera.position.z > 3000
   ) {
     camera.position.set(0, 50, 0);
   }
   if (
-    camera.position.x > -50 &&
-    camera.position.x < 50 &&
-    camera.position.z < -495 &&
-    camera.position.z > -505
+    camera.position.x > -480 &&
+    camera.position.x < -475 &&
+    camera.position.z < 50 &&
+    camera.position.z > -50 &&
+    camera.position.y > 25 &&
+    camera.position.y < 125
   ) {
     sound.stop();
     disposeWorld(scene);
