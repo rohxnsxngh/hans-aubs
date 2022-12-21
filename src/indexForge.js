@@ -460,7 +460,6 @@ function render() {
     console.log("Active Drawcalls:", renderer.info.render.calls);
     console.log("Textures in Memory", renderer.info.memory.textures);
     console.log("Geometries in Memory", renderer.info.memory.geometries);
-    console.log(scene);
 
     document.getElementById("container").style.visibility = "hidden";
     document.getElementById("container2").style.visibility = "visible";

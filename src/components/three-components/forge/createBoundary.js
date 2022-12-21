@@ -3,9 +3,7 @@ import * as THREE from "three";
 function createBoundary(scene) {
   let torus;
   let torusCollection = [];
-  const material = new THREE.MeshNormalMaterial({
-    color: 0xffff00,
-  });
+  const material = new THREE.MeshNormalMaterial();
   
   for (let i = 0; i < 11; i++) {
     const geometry = new THREE.TorusGeometry(100 - (10 * i), 5, 20, 60);
