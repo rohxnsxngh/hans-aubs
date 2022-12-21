@@ -55,6 +55,9 @@ let yHalfSize = ySize / 2;
 let xSegmentSize = xSize / xSegments; //Size of one square
 let ySegmentSize = ySize / ySegments;
 
+init();
+animate();
+
 function init() {
   container = document.getElementById("container");
 
@@ -117,7 +120,7 @@ function init() {
     alpha: 1,
   });
   colors[0] = [0, 0, 0, 0];
-  // console.log(colors);
+
   const lut = colors.map((color) => {
     const red = color[0] / 255;
     const green = color[1] / 255;
@@ -125,7 +128,7 @@ function init() {
 
     return new THREE.Vector3(red, green, blue);
   });
-  // console.log(lut);
+
   //Grab the shaders from the document
   const vShader = document.getElementById("vertexshader");
   const fShader = document.getElementById("fragmentshader");
@@ -276,8 +279,6 @@ function init() {
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
-  // createBackground(scene);
-  // sphere = createSphere(scene, camera);
 
   sound = createAmbientSound(camera);
   const audio = document.getElementById("audio");
@@ -306,14 +307,10 @@ function init() {
     return ANALYSER;
   });
 
-  // createCurve(scene);
-
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
   axesHelper.add(sound);
-
-  // createRectLight(scene);
 
   //Controls
   //First Person Controls
@@ -349,7 +346,6 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // composer.setSize(window.innerWidth, window.innerHeight);
 }
 
 //Animate
@@ -456,9 +452,9 @@ function render() {
     sound.stop();
     disposeWorld(scene);
     renderer.renderLists.dispose();
-    scene.environment.dispose()
+    scene.environment.dispose();
     scene.fog = null;
-    renderer.dispose()
+    renderer.dispose();
 
     console.log("Scene Polycount:", renderer.info.render.triangles);
     console.log("Active Drawcalls:", renderer.info.render.calls);
@@ -469,7 +465,10 @@ function render() {
     document.getElementById("container").style.visibility = "hidden";
     document.getElementById("container2").style.visibility = "visible";
   }
-  renderer.render(scene, camera);
+
+  if (document.getElementById("container").style.visibility = "visible") {
+    renderer.render(scene, camera);
+  }
 }
 
 const updateGeometry = function () {
@@ -483,9 +482,6 @@ const updateGeometry = function () {
     new THREE.Uint8BufferAttribute(heights, 1)
   );
 };
-
-init();
-animate();
 
 console.log("Scene Polycount:", renderer.info.render.triangles);
 console.log("Active Drawcalls:", renderer.info.render.calls);

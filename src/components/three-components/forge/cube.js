@@ -9,7 +9,7 @@ function createCube(scene) {
     color: 0x000000,
     emissive: 0xF52300,
     specular: 0xffffff,
-    shininess: 15,
+    shininess: 30,
   });
 
   const meshCube = new THREE.InstancedMesh(geometryCube, materialCube, count);

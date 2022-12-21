@@ -3,11 +3,8 @@ import * as THREE from "three";
 function createBoundary(scene) {
   let torus;
   let torusCollection = [];
-  const material = new THREE.MeshPhongMaterial({
-    color: 0x000000,
-    emissive: 0x6101F5,
-    specular: 0xffffff,
-    shininess: 15,
+  const material = new THREE.MeshNormalMaterial({
+    color: 0xffff00,
   });
   
   for (let i = 0; i < 11; i++) {
