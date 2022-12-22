@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function createPortal(scene, x, y, z, scale) {
+function createPortal(scene, x, y, z, scale, blend) {
   const color = new THREE.Color();
   const geometryTorus = new THREE.TorusGeometry(125, 7, 16, 100);
   const materialTorus = new THREE.MeshPhongMaterial({
@@ -24,7 +24,7 @@ function createPortal(scene, x, y, z, scale) {
 
   const geometry = new THREE.CircleGeometry(30, 32);
   const material = new THREE.MeshBasicMaterial({
-    color: 0x0107fa,
+    color: blend,
   });
   const portalMesh = new THREE.InstancedMesh(geometry, material, 5000);
   const matrix = new THREE.Matrix4();

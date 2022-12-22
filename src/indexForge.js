@@ -192,11 +192,11 @@ function init() {
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0xfa1d00, 15);
+  ambientLight = new THREE.AmbientLight(0xEBBE1F, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
-  const directionalLight = new THREE.DirectionalLight(0xfa1d00, 15);
+  const directionalLight = new THREE.DirectionalLight(0xEBBE1F, 15);
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
@@ -282,7 +282,7 @@ function init() {
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
-  portalMesh = createPortal(scene, -500, 75, 0, 0.1)
+  portalMesh = createPortal(scene, -500, 75, 0, 0.1, 0x4C00F0)
   portalMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 
   sound = createAmbientSound(camera);
@@ -435,6 +435,7 @@ function render() {
   // particles.position.x += Math.sin(time * 10) / 4;
 
   // mixer.update( delta );
+  // console.log(performance.memory)
   controls.update(delta);
   //Min Height
   if (camera.position.y < 5) {
@@ -461,12 +462,15 @@ function render() {
     camera.position.y > 25 &&
     camera.position.y < 125
   ) {
+    // stop sound, dispose of stored memory, clear scene and remove renderer
     sound.stop();
     disposeWorld(scene);
     renderer.renderLists.dispose();
     scene.environment.dispose();
     scene.fog = null;
-    renderer.dispose();
+    scene.clear()
+    renderer.setRenderTarget(null)
+    renderer.dispose()
 
     console.log("Scene Polycount:", renderer.info.render.triangles);
     console.log("Active Drawcalls:", renderer.info.render.calls);
