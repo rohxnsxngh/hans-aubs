@@ -17,8 +17,8 @@ import { createAmbientSound } from "./components/three-components/forge/ambientS
 import { createTorusKnot } from "./components/three-components/forge/createTorusKnot";
 import colormap from "colormap";
 import { createCapsule } from "./components/three-components/forge/createCapsule";
-import { disposeWorld } from "./components/three-components/disposeScene/disposeWorld";
-import { createPortal } from "./components/three-components/createPortal";
+import { disposeWorld } from "./components/three-components/global/disposeWorld";
+import { createPortal } from "./components/three-components/global/createPortal";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;

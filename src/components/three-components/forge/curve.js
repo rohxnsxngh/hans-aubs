@@ -4,9 +4,7 @@ function createCurve(scene) {
   //curve camera path
   const curve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(0, 0, 4000),
-    new THREE.Vector3(4000, 0, 2000),
     new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(-4000, 0, -2000),
     new THREE.Vector3(0, 0, -4000),
   ]);
   // const speed = 0.05;
