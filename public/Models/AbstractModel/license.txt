@@ -1,0 +1,11 @@
+Model Information:
+* title:	KUMA Heavy Robot R-9000S
+* source:	https://sketchfab.com/3d-models/kuma-heavy-robot-r-9000s-8b77bdbe705f4e9697790fd404da49a9
+* author:	Heinrich (https://sketchfab.com/Gevalt)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "KUMA Heavy Robot R-9000S" (https://sketchfab.com/3d-models/kuma-heavy-robot-r-9000s-8b77bdbe705f4e9697790fd404da49a9) by Heinrich (https://sketchfab.com/Gevalt) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

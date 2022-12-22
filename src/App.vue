@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="loader" v-if="isLoading"></div>
-    <div class="nav-container" v-if="!isLoading">
+    <div v-if="isLoading"></div>
+    <div v-if="!isLoading">
       <Navbar/>
     </div>
   </div>
@@ -11,7 +11,6 @@
 import Navbar from "./components/navbar.vue";
 
 export default {
-  name: "main",
   components: {
     Navbar
   },

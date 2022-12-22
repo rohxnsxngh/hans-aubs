@@ -3,27 +3,22 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonControls.js";
 import { Water } from "three/examples/jsm/objects/Water.js";
-import { Sky } from "three/examples/jsm/objects/Sky.js";
-import { createCurve } from "./components/three-components/curve";
-import { spaceBoi } from "./components/three-components/spaceboi";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MarchingCubes } from "three/examples/jsm/objects/MarchingCubes.js";
-import { createTextHome } from "./components/three-components/text/textHome";
-import { createParticles } from "./components/three-components/particles";
-import { createCube } from "./components/three-components/cube";
-import { updateSun } from "./components/three-components/updateSun";
-import { generateMaterials } from "./components/three-components/generateMaterials";
-import { createBoundary } from "./components/three-components/createBoundary";
-import { createTextAbout } from "./components/three-components/text/textAbout";
-import { createTextExp } from "./components/three-components/text/textExp";
-import { createTextLab } from "./components/three-components/text/textLabs";
-import { createAmbientSound } from "./components/three-components/ambientSound";
-import { createTorusKnot } from "./components/three-components/createTorusKnot";
-import { createSphere } from "./components/three-components/createSphere";
-import { createBackground } from "./components/three-components/createBackground";
+import { createTextHome } from "./components/three-components/forge/text/textHome";
+import { createParticles } from "./components/three-components/forge/particles";
+import { createCube } from "./components/three-components/forge/cube";
+import { updateSun } from "./components/three-components/forge/updateSun";
+import { generateMaterials } from "./components/three-components/forge/generateMaterials";
+import { createBoundary } from "./components/three-components/forge/createBoundary";
+import { createTextAbout } from "./components/three-components/forge/text/textAbout";
+import { createTextExp } from "./components/three-components/forge/text/textExp";
+import { createTextLab } from "./components/three-components/forge/text/textLabs";
+import { createAmbientSound } from "./components/three-components/forge/ambientSound";
+import { createTorusKnot } from "./components/three-components/forge/createTorusKnot";
 import colormap from "colormap";
-import { createCapsule } from "./components/three-components/createCapsule";
-import { createPortal } from "./components/three-components/createPortal";;
+import { createCapsule } from "./components/three-components/forge/createCapsule";
+import { disposeWorld } from "./components/three-components/global/disposeWorld";
+import { createPortal } from "./components/three-components/global/createPortal";
 
 let container, particles, meshCube, torusKnot, fontLoader;
 let camera, scene, renderer, clock;
@@ -37,15 +32,15 @@ let controls,
   mesh,
   mesh1,
   mesh2,
-  mesh3;
-let pointLight, ambientLight, sphere, indices, ANALYSER;
+  mesh3,
+  portalMesh;
+let indices, ANALYSER;
 let materials, current_material;
 let resolution;
 let effectController;
 let effect;
 let time = 0;
 let count = 0;
-let objects = [];
 
 const frequencySamples = 256;
 const timeSamples = 400;
@@ -59,6 +54,9 @@ let xHalfSize = xSize / 2;
 let yHalfSize = ySize / 2;
 let xSegmentSize = xSize / xSegments; //Size of one square
 let ySegmentSize = ySize / ySegments;
+
+init();
+animate();
 
 function init() {
   container = document.getElementById("container");
@@ -122,7 +120,7 @@ function init() {
     alpha: 1,
   });
   colors[0] = [0, 0, 0, 0];
-  // console.log(colors);
+
   const lut = colors.map((color) => {
     const red = color[0] / 255;
     const green = color[1] / 255;
@@ -130,7 +128,7 @@ function init() {
 
     return new THREE.Vector3(red, green, blue);
   });
-  // console.log(lut);
+
   //Grab the shaders from the document
   const vShader = document.getElementById("vertexshader");
   const fShader = document.getElementById("fragmentshader");
@@ -188,15 +186,15 @@ function init() {
   container.appendChild(renderer.domElement);
 
   //LIGHT
-  pointLight = new THREE.PointLight(0xfa1d00);
+  const pointLight = new THREE.PointLight(0xfa1d00);
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0xfa1d00, 15);
+  const ambientLight = new THREE.AmbientLight(0xEBBE1F, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
-  const directionalLight = new THREE.DirectionalLight(0xfa1d00, 15);
+  const directionalLight = new THREE.DirectionalLight(0xEBBE1F, 15);
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
@@ -225,7 +223,7 @@ function init() {
   clock = new THREE.Clock();
 
   //Water
-  const waterGeometry = new THREE.PlaneGeometry(5000, 5000);
+  const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
 
   water = new Water(waterGeometry, {
     textureWidth: 512,
@@ -273,16 +271,17 @@ function init() {
   createTextAbout(scene, fontLoader);
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
-  createCapsule(scene, -500, 0, 0x0084db, 1.2);
-  createCapsule(scene, -800, -300, 0xdb0a00, 2);
-  createCapsule(scene, -800, 200, 0xf52300, 1.5);
-  createCapsule(scene, -500, 300, 0xe8dcca, 2);
+  createCapsule(scene, -500, 0, 0x000000, 1.2);
+  createCapsule(scene, -800, -250, 0x000000, 2);
+  createCapsule(scene, -800, 200, 0x000000, 1.5);
+  createCapsule(scene, -500, 300, 0x000000, 2);
+  createCapsule(scene, -500, -300, 0x000000, 1.2);
   // createPortal(scene)
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
-  // createBackground(scene);
-  // sphere = createSphere(scene, camera);
+  portalMesh = createPortal(scene, -500, 75, 0, 0.1, 0x4C00F0)
+  portalMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 
   sound = createAmbientSound(camera);
   const audio = document.getElementById("audio");
@@ -311,14 +310,10 @@ function init() {
     return ANALYSER;
   });
 
-  // createCurve(scene);
-
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
   axesHelper.add(sound);
-
-  // createRectLight(scene);
 
   //Controls
   //First Person Controls
@@ -354,7 +349,6 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // composer.setSize(window.innerWidth, window.innerHeight);
 }
 
 //Animate
@@ -431,19 +425,25 @@ function render() {
   torus[9].position.y += Math.sin(time * 8) / 1;
   torus[10].position.y += Math.sin(time * 8) / 1;
 
+  portalMesh.rotation.z -= delta * 1.5;
+
   effect.position.y += Math.sin(time * 5) / 1;
 
   particles.position.y += Math.sin(time / 4);
   // particles.position.x += Math.sin(time * 10) / 4;
 
   // mixer.update( delta );
+  // console.log(performance.memory)
   controls.update(delta);
+  //Min Height
   if (camera.position.y < 5) {
     camera.position.y = 5;
   }
+  //Max Height
   if (camera.position.y > 480) {
     camera.position.y = 480;
   }
+  //Max explorable distance
   if (
     camera.position.x > 2000 ||
     camera.position.x < -2000 ||
@@ -452,11 +452,36 @@ function render() {
   ) {
     camera.position.set(0, 50, 0);
   }
-  // if (camera.position.x > -50 && camera.position.x < 50 && camera.position.z < -495 && camera.position.z > -505)  {
-  //   camera.position.set(0,10000,10000)
-  // }
-  // console.log(camera.position.z)
-  renderer.render(scene, camera);
+  if (
+    camera.position.x > -480 &&
+    camera.position.x < -475 &&
+    camera.position.z < 50 &&
+    camera.position.z > -50 &&
+    camera.position.y > 25 &&
+    camera.position.y < 125
+  ) {
+    // stop sound, dispose of stored memory, clear scene and remove renderer
+    sound.stop();
+    disposeWorld(scene);
+    renderer.renderLists.dispose();
+    scene.environment.dispose();
+    scene.fog = null;
+    scene.clear()
+    renderer.setRenderTarget(null)
+    renderer.dispose()
+
+    console.log("Scene Polycount:", renderer.info.render.triangles);
+    console.log("Active Drawcalls:", renderer.info.render.calls);
+    console.log("Textures in Memory", renderer.info.memory.textures);
+    console.log("Geometries in Memory", renderer.info.memory.geometries);
+
+    document.getElementById("container").style.visibility = "hidden";
+    document.getElementById("container2").style.visibility = "visible";
+  }
+
+  if (document.getElementById("container").style.visibility = "visible") {
+    renderer.render(scene, camera);
+  }
 }
 
 const updateGeometry = function () {
@@ -470,9 +495,6 @@ const updateGeometry = function () {
     new THREE.Uint8BufferAttribute(heights, 1)
   );
 };
-
-init();
-animate();
 
 console.log("Scene Polycount:", renderer.info.render.triangles);
 console.log("Active Drawcalls:", renderer.info.render.calls);
@@ -517,4 +539,14 @@ function updateCubes(object, time, numblobs, floor, wallx, wallz) {
   if (wallx) object.addPlaneX(2, 12);
 
   object.update();
+}
+
+function removeCells() {
+  somearray.map((i) => {
+    const object = scene.getObjectByProperty("uuid", i);
+
+    object.geometry.dispose();
+    object.material.dispose();
+    scene.remove(object);
+  });
 }
