@@ -1,0 +1,11 @@
+Model Information:
+* title:	Abstract Design
+* source:	https://sketchfab.com/3d-models/abstract-design-5f61a7b5eaa64af093d7cd721c9ef5ad
+* author:	cherkesgiller (https://sketchfab.com/cherkesgiller)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Abstract Design" (https://sketchfab.com/3d-models/abstract-design-5f61a7b5eaa64af093d7cd721c9ef5ad) by cherkesgiller (https://sketchfab.com/cherkesgiller) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)

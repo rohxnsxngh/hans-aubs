@@ -17,7 +17,6 @@ import { createAmbientSound } from "./components/three-components/forge/ambientS
 import { createTorusKnot } from "./components/three-components/forge/createTorusKnot";
 import colormap from "colormap";
 import { createCapsule } from "./components/three-components/forge/createCapsule";
-// import { createPortal } from "./components/three-components/forge/createPortal";
 import { disposeWorld } from "./components/three-components/disposeScene/disposeWorld";
 import { createPortal } from "./components/three-components/createPortal";
 
@@ -35,14 +34,13 @@ let controls,
   mesh2,
   mesh3,
   portalMesh;
-let pointLight, ambientLight, sphere, indices, ANALYSER;
+let indices, ANALYSER;
 let materials, current_material;
 let resolution;
 let effectController;
 let effect;
 let time = 0;
 let count = 0;
-let objects = [];
 
 const frequencySamples = 256;
 const timeSamples = 400;
@@ -188,11 +186,11 @@ function init() {
   container.appendChild(renderer.domElement);
 
   //LIGHT
-  pointLight = new THREE.PointLight(0xfa1d00);
+  const pointLight = new THREE.PointLight(0xfa1d00);
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  ambientLight = new THREE.AmbientLight(0xEBBE1F, 15);
+  const ambientLight = new THREE.AmbientLight(0xEBBE1F, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.

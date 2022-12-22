@@ -1,20 +1,17 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-function spaceBoi(scene, object) {
-  let mixer;
-
-  //load Space Boi Logo
+function createAbstract(scene) {
+  //load Red Background
   const loader = new GLTFLoader();
   loader.load(
-    "./lighthouse/scene.gltf",
+    "/Models/AbstractModel/scene.gltf",
     function (gltf) {
-      mixer = new THREE.AnimationMixer(gltf.scene)
-      object = gltf.scene;
+      const object = gltf.scene;
       object.position.set(0, 0, 0);
-      object.scale.set(10, 10, 10);
-      object.rotateOnAxis(new THREE.Vector3(0, 1, 0), (Math.PI) / 2);
-      object.castShadow = true;
+      // object.scale.set(10, 10, 10);
+    //   object.rotateOnAxis(new THREE.Vector3(0, 1, 0), (Math.PI) / 2);
+    //   object.castShadow = true;
       scene.add(object);
 
 
@@ -44,4 +41,4 @@ function spaceBoi(scene, object) {
   );
 }
 
-export { spaceBoi };
+export { createAbstract };

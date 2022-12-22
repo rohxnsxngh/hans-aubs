@@ -1,8 +1,10 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { createCurve } from "./components/three-components/forge/curve";
+import { createAbstract } from "./components/three-components/createAbstract";
 
-let camera, scene, renderer, container;
-let mesh, controls, clock, directionalLight, portalParticles;
+let camera, scene, renderer, container, curve, speed, pathTarget;
+let mesh, controls, clock, portalParticles;
 let time = 0;
 
 init();
@@ -20,7 +22,7 @@ function init() {
   camera.position.set(0, 0, 1000);
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
+  scene.background = new THREE.Color(0xaaf09a);
 
   clock = new THREE.Clock();
 
@@ -33,14 +35,23 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
   directionalLight.position.set(0, 0, 1);
   scene.add(directionalLight);
 
-  const geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
-  const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-  const cylinder = new THREE.Mesh(geometry, material);
-  scene.add(cylinder);
+  //LIGHT
+  const pointLight = new THREE.PointLight(0xffffff);
+  pointLight.position.set(0, 0, 0);
+  scene.add(pointLight);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  createAbstract(scene);
+
+  // curve = createCurve(scene);
+  // speed = 0.01;
+  // pathTarget = new THREE.Vector3(0, 0, -4000);
 
   //
   controls = new OrbitControls(camera, renderer.domElement);
@@ -69,6 +80,9 @@ function animate() {
 function render() {
   const delta = clock.getDelta();
   time += delta * 1.0 * 0.5;
+  // Allows camera to follow designed path
+  // curve.getPoint((clock.getElapsedTime() * speed) % 1.0, pathTarget);
+  // camera.position.copy(pathTarget);
 
   controls.update(delta);
   if (document.getElementById("container2").style.visibility == "visible") {
