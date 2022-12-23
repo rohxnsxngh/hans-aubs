@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-function disposeWorld(scene) {
+function disposeWorld(scene, renderer) {
   for (let i = 0; i < scene.children.length; i++) {
     if (
       scene.children[i].isMesh ||
@@ -59,6 +59,13 @@ function disposeWorld(scene) {
         scene.children[i].roughnessMap.dispose();
     }
   }
+  renderer.renderLists.dispose();
+  scene.environment.dispose();
+  scene.fog = null;
+  scene.clear()
+  renderer.setRenderTarget(null)
+  renderer.dispose()
+
   return scene
 }
 

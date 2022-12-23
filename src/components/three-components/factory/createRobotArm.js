@@ -1,16 +1,16 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+let mixer;
 function createRobotArm(scene) {
-  let mixer;
   //load Red Background
   const loader = new GLTFLoader();
   loader.load(
     "/Models/AbstractModel/scene.gltf",
-    function (gltf) {
+    (gltf) => {
       const object = gltf.scene;
       object.position.set(0, 0, 0);
-      // object.scale.set(10, 10, 10);
+      object.scale.set(0.1, 0.1, 0.1);
     //   object.rotateOnAxis(new THREE.Vector3(0, 1, 0), (Math.PI) / 2);
     //   object.castShadow = true;
       scene.add(object);
@@ -33,18 +33,19 @@ function createRobotArm(scene) {
       //   mixer.clipAction(gltf.animations[0]).play();
       //   mixers.push(mixer)
       // }
+      // console.log(mixer)
+      // return mixer
     },
     // onProgress callback
-    function (xhr) {
+    (xhr) => {
       console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
     },
 
     // onError callback
-    function (err) {
+    (err) => {
       console.log("An error happened");
     }
   );
-  return mixer
 }
 
 export { createRobotArm };

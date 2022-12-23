@@ -190,11 +190,11 @@ function init() {
   pointLight.position.set(0, 0, 0);
   scene.add(pointLight);
 
-  const ambientLight = new THREE.AmbientLight(0xEBBE1F, 15);
+  const ambientLight = new THREE.AmbientLight(0xebbe1f, 15);
   scene.add(ambientLight);
 
   // White directional light at half intensity shining from the top.
-  const directionalLight = new THREE.DirectionalLight(0xEBBE1F, 15);
+  const directionalLight = new THREE.DirectionalLight(0xebbe1f, 15);
   directionalLight.position.set(0, 0, 0);
   scene.add(directionalLight);
 
@@ -280,7 +280,7 @@ function init() {
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);
-  portalMesh = createPortal(scene, -500, 75, 0, 0.1, 0x4C00F0)
+  portalMesh = createPortal(scene, -500, 75, 0, 0.1, 0x4c00f0);
   portalMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
 
   sound = createAmbientSound(camera);
@@ -453,8 +453,8 @@ function render() {
     camera.position.set(0, 50, 0);
   }
   if (
-    camera.position.x > -480 &&
-    camera.position.x < -475 &&
+    camera.position.x > -485 &&
+    camera.position.x < -470 &&
     camera.position.z < 50 &&
     camera.position.z > -50 &&
     camera.position.y > 25 &&
@@ -462,24 +462,20 @@ function render() {
   ) {
     // stop sound, dispose of stored memory, clear scene and remove renderer
     sound.stop();
-    disposeWorld(scene);
-    renderer.renderLists.dispose();
-    scene.environment.dispose();
-    scene.fog = null;
-    scene.clear()
-    renderer.setRenderTarget(null)
-    renderer.dispose()
+    disposeWorld(scene, renderer);
 
     console.log("Scene Polycount:", renderer.info.render.triangles);
     console.log("Active Drawcalls:", renderer.info.render.calls);
     console.log("Textures in Memory", renderer.info.memory.textures);
     console.log("Geometries in Memory", renderer.info.memory.geometries);
 
-    document.getElementById("container").style.visibility = "hidden";
-    document.getElementById("container2").style.visibility = "visible";
+    if (renderer.info.render.triangles == 0) {
+      document.getElementById("container").style.visibility = "hidden";
+      document.getElementById("container2").style.visibility = "visible";
+    }
   }
 
-  if (document.getElementById("container").style.visibility = "visible") {
+  if ((document.getElementById("container").style.visibility = "visible")) {
     renderer.render(scene, camera);
   }
 }
