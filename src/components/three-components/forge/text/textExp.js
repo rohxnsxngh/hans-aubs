@@ -11,7 +11,7 @@ function createTextExp(scene, fontLoader) {
     });
     const textMaterialExp = new THREE.MeshBasicMaterial({ color: 0x5600F5 });
     const textMeshExp = new THREE.Mesh(textGeometryExp, textMaterialExp);
-    textMeshExp.position.set(50, 150, 500);
+    textMeshExp.position.set(50, 150, 400);
     textMeshExp.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshExp);
 
@@ -30,7 +30,7 @@ function createTextExp(scene, fontLoader) {
       textGeometryExpCaption,
       textMaterialExpCaption
     );
-    textMeshExpCaption.position.set(50, 135, 500);
+    textMeshExpCaption.position.set(50, 135, 400);
     textMeshExpCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshExpCaption);
   });

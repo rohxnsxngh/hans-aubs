@@ -10,7 +10,7 @@ function createTextAbout(scene, fontLoader) {
     });
     const textMaterialAbout = new THREE.MeshBasicMaterial({ color: 0x5600F5 });
     const textMeshAbout = new THREE.Mesh(textGeometryAbout, textMaterialAbout);
-    textMeshAbout.position.set(500, 150, -50);
+    textMeshAbout.position.set(400, 150, -50);
     textMeshAbout.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
     scene.add(textMeshAbout);
 
@@ -24,7 +24,7 @@ function createTextAbout(scene, fontLoader) {
       );
       const textMaterialAboutCaption = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const textMeshAboutCaption = new THREE.Mesh(textGeometryAboutCaption, textMaterialAboutCaption);
-      textMeshAboutCaption.position.set(500, 135, -50);
+      textMeshAboutCaption.position.set(400, 135, -50);
       textMeshAboutCaption.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
       scene.add(textMeshAboutCaption);
       return textMeshAbout, textMeshAboutCaption;

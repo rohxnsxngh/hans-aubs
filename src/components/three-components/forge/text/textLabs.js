@@ -5,7 +5,7 @@ function createTextLab(scene, fontLoader) {
     fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryLab = new TextGeometry("The Lab", {
       height: 8,
-      size: 40,
+      size: 64,
       font: droidFont,
     });
     const textMaterialLab = new THREE.MeshBasicMaterial({ color: 0x5600F5 });

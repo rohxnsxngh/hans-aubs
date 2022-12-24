@@ -272,8 +272,8 @@ function init() {
   createTextExp(scene, fontLoader);
   createTextLab(scene, fontLoader);
   createCapsule(scene, -500, 0, 0x000000, 1.2);
-  createCapsule(scene, -800, -250, 0x000000, 2);
-  createCapsule(scene, -800, 200, 0x000000, 1.5);
+  createCapsule(scene, -1000, -250, 0x000000, 2);
+  createCapsule(scene, -1000, 200, 0x000000, 1.5);
   createCapsule(scene, -500, 300, 0x000000, 2);
   createCapsule(scene, -500, -300, 0x000000, 1.2);
   // createPortal(scene)

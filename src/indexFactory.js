@@ -6,10 +6,14 @@ import { createLimits } from "./components/three-components/factory/createLimits
 import { createCurve } from "./components/three-components/forge/curve";
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 import { createConveyorBelt } from "./components/three-components/factory/createConveyorBelt";
+import { createTextIntro } from "./components/three-components/factory/text/intro";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { createTextMiddle } from "./components/three-components/factory/text/middle";
+import { createTextMiddleSecond } from "./components/three-components/factory/text/middleSecond";
 import { createSparks } from "./components/three-components/factory/createSparks";
 import { createRobotArm } from "./components/three-components/factory/createRobotArm";
 
-let camera, scene, renderer, container, curve, speed, pathTarget;
+let camera, scene, renderer, container, curve, speed, pathTarget, fontLoader;
 let controls, clock, mixer, _mixer, sparks;
 let mixers = [];
 let _mixers = [];
@@ -27,7 +31,7 @@ function init() {
     20000
   );
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2);
-  camera.position.set(0, -20, 0);
+  camera.position.set(0, -20, -500);
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
@@ -60,12 +64,18 @@ function init() {
   //FOG
   const color = 0xffffff;
   const near = 10;
-  const far = 1000;
+  const far = 650;
   scene.fog = new THREE.Fog(color, near, far);
 
   //ORIGIN
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
+
+  //FONT
+  fontLoader = new FontLoader();
+  createTextIntro(scene, fontLoader)
+  createTextMiddle(scene, fontLoader)
+  createTextMiddleSecond(scene, fontLoader)
 
   createLimits(scene);
   createConveyorBelt(scene);
