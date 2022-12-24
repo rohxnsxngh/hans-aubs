@@ -67,7 +67,7 @@ function init() {
     55,
     window.innerWidth / window.innerHeight,
     1,
-    20000
+    5000
   );
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 0), 0);
   camera.position.set(0, 50, 0);
@@ -273,10 +273,9 @@ function init() {
   createTextLab(scene, fontLoader);
   createCapsule(scene, -500, 0, 0x000000, 1.2);
   createCapsule(scene, -1000, -250, 0x000000, 2);
-  createCapsule(scene, -1000, 200, 0x000000, 1.5);
+  createCapsule(scene, -1000, 250, 0x000000, 1.5);
   createCapsule(scene, -500, 300, 0x000000, 2);
   createCapsule(scene, -500, -300, 0x000000, 1.2);
-  // createPortal(scene)
   meshCube = createCube(scene);
   torus = createBoundary(scene);
   particles = createParticles(scene);

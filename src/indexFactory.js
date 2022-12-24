@@ -3,13 +3,14 @@ import { FirstPersonControls } from "three/examples/jsm/controls/FirstPersonCont
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { createLimits } from "./components/three-components/factory/createLimits";
-import { createCurve } from "./components/three-components/forge/curve";
+import { createCurve } from "./components/three-components/factory/curve";
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 import { createConveyorBelt } from "./components/three-components/factory/createConveyorBelt";
 import { createTextIntro } from "./components/three-components/factory/text/intro";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { createTextMiddle } from "./components/three-components/factory/text/middle";
 import { createTextMiddleSecond } from "./components/three-components/factory/text/middleSecond";
+import { createPortal } from "./components/three-components/global/createPortal";
 import { createSparks } from "./components/three-components/factory/createSparks";
 import { createRobotArm } from "./components/three-components/factory/createRobotArm";
 
@@ -54,8 +55,8 @@ function init() {
   directionalLight.position.set(0, 0, 1);
   scene.add(directionalLight);
 
-  const pointLight = new THREE.PointLight(0xffffff);
-  pointLight.position.set(0, 0, 0);
+  const pointLight = new THREE.PointLight(0xFA820D);
+  pointLight.position.set(0, -50, -200);
   scene.add(pointLight);
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -79,6 +80,7 @@ function init() {
 
   createLimits(scene);
   createConveyorBelt(scene);
+  // createPortal(scene, 0, -60, -3000, 0.1, 0x4c00f0);
   // sparks = createSparks(scene);
 
   curve = createCurve(scene);

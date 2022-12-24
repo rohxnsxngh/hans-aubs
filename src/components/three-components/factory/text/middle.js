@@ -4,7 +4,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createTextMiddle(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryMiddle = new TextGeometry(
-      "Well...Welcome\nto the Factory.",
+      "Well...Welcome to the Factory.\nThis is where the magic is made.\nLet's take you on a little journey\nthrough this world.",
       {
         height: 2,
         size: 4,

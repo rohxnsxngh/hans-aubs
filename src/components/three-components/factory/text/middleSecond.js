@@ -4,7 +4,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createTextMiddleSecond(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryMiddleSecond = new TextGeometry(
-      "This is where the magic\nis made. Enjoy the journey",
+      "Since we're here let me tell you a little more about\nmyself. I am a mechanical engineer. My interest lie in robotics\nand mechatronics. However, I am content as long as I am creating.",
       {
         height: 2,
         size: 4,

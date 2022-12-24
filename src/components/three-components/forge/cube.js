@@ -33,7 +33,7 @@ function createCube(scene) {
     }
   }
   meshCube.scale.set(15, 15, 15);
-  meshCube.position.set(-1000, 100, 200);
+  meshCube.position.set(-1000, 100, 250);
   scene.add(meshCube);
   return meshCube;
 }
