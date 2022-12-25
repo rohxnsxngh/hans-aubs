@@ -6,8 +6,8 @@ function createTextIntro(scene, fontLoader) {
     const textGeometryIntro = new TextGeometry(
       "You went through\nthe portal...didn't you?",
       {
-        height: 2,
-        size: 4,
+        height: 1,
+        size: 2,
         font: droidFont,
       }
     );

@@ -9,7 +9,12 @@ import { createConveyorBelt } from "./components/three-components/factory/create
 import { createTextIntro } from "./components/three-components/factory/text/intro";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { createTextMiddle } from "./components/three-components/factory/text/middle";
-import { createTextMiddleSecond } from "./components/three-components/factory/text/middleSecond";
+import { createTextFirstStanza } from "./components/three-components/factory/text/firstStanza";
+import { createTextSecondStanza } from "./components/three-components/factory/text/secondStanza";
+import { createTextThirdStanza } from "./components/three-components/factory/text/thirdStanza";
+import { createTextFourthStanza } from "./components/three-components/factory/text/fourthStanza";
+import { createTextFifthStanza } from "./components/three-components/factory/text/fifthStanza";
+import { createTextSixthStanza } from "./components/three-components/factory/text/sixthStanza";
 import { createPortal } from "./components/three-components/global/createPortal";
 import { createSparks } from "./components/three-components/factory/createSparks";
 import { createRobotArm } from "./components/three-components/factory/createRobotArm";
@@ -29,10 +34,10 @@ function init() {
     55,
     window.innerWidth / window.innerHeight,
     20,
-    20000
+    5000
   );
   // camera.rotateOnAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2);
-  camera.position.set(0, -20, -500);
+  // camera.position.set(0, -20, -500);
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
@@ -76,7 +81,12 @@ function init() {
   fontLoader = new FontLoader();
   createTextIntro(scene, fontLoader)
   createTextMiddle(scene, fontLoader)
-  createTextMiddleSecond(scene, fontLoader)
+  createTextFirstStanza(scene, fontLoader)
+  createTextSecondStanza(scene, fontLoader)
+  createTextThirdStanza(scene, fontLoader)
+  createTextFourthStanza(scene, fontLoader)
+  createTextFifthStanza(scene, fontLoader)
+  createTextSixthStanza(scene, fontLoader)
 
   createLimits(scene);
   createConveyorBelt(scene);
@@ -84,7 +94,7 @@ function init() {
   // sparks = createSparks(scene);
 
   curve = createCurve(scene);
-  speed = 0.01;
+  speed = 0.005;
   pathTarget = new THREE.Vector3(0, 0, -4000);
 
   // createRobotArm(scene);
@@ -208,30 +218,29 @@ function animate() {
 }
 
 function render() {
-  const delta = clock.getDelta();
-  time += delta * 1.0 * 0.5;
-  // Allows camera to follow designed path
-  curve.getPoint((clock.getElapsedTime() * speed) % 1.0, pathTarget);
-  camera.position.copy(pathTarget);
-
-  // if (mixer) {
-  //   mixer.update(delta);
-  // }
-  // console.log("Scene Polycount:", renderer.info.render.triangles);
-  // console.log("Active Drawcalls:", renderer.info.render.calls);
-  // console.log("Textures in Memory", renderer.info.memory.textures);
-  // console.log("Geometries in Memory", renderer.info.memory.geometries);
-
-  mixers.forEach(function (mixer) {
-    mixer.update(delta);
-  });
-
-  _mixers.forEach(function (_mixer) {
-    _mixer.update(delta);
-  });
-
-  controls.update(delta);
+  // controls.update(delta);
   if (document.getElementById("container2").style.visibility == "visible") {
+    const delta = clock.getDelta();
+    time += delta * 1.0 * 0.5;
+    // Allows camera to follow designed path
+    curve.getPoint((clock.getElapsedTime() * speed) % 1.0, pathTarget);
+    camera.position.copy(pathTarget);
+  
+    // if (mixer) {
+    //   mixer.update(delta);
+    // }
+    // console.log("Scene Polycount:", renderer.info.render.triangles);
+    // console.log("Active Drawcalls:", renderer.info.render.calls);
+    // console.log("Textures in Memory", renderer.info.memory.textures);
+    // console.log("Geometries in Memory", renderer.info.memory.geometries);
+  
+    mixers.forEach(function (mixer) {
+      mixer.update(delta);
+    });
+  
+    _mixers.forEach(function (_mixer) {
+      _mixer.update(delta);
+    });
     renderer.render(scene, camera);
   }
 }
