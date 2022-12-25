@@ -20,7 +20,7 @@ import { createSparks } from "./components/three-components/factory/createSparks
 import { createRobotArm } from "./components/three-components/factory/createRobotArm";
 
 let camera, scene, renderer, container, curve, speed, pathTarget, fontLoader;
-let controls, clock, mixer, _mixer, sparks;
+let controls, clock, mixer, _mixer, _mixerRobot, cameraRobot;
 let mixers = [];
 let _mixers = [];
 let time = 0;
@@ -36,7 +36,7 @@ function init() {
     20,
     5000
   );
-  // camera.rotateOnAxis(new THREE.Vector3(0, 0, 1), Math.PI / 2);
+  camera.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
   // camera.position.set(0, -20, -500);
 
   scene = new THREE.Scene();
@@ -57,11 +57,11 @@ function init() {
 
   //LIGHT
   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, 0, 1);
+  directionalLight.position.set(0, 0, -3000);
   scene.add(directionalLight);
 
-  const pointLight = new THREE.PointLight(0xFA820D);
-  pointLight.position.set(0, -50, -200);
+  const pointLight = new THREE.PointLight(0xfa820d);
+  pointLight.position.set(0, -20, -3000);
   scene.add(pointLight);
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -79,14 +79,14 @@ function init() {
 
   //FONT
   fontLoader = new FontLoader();
-  createTextIntro(scene, fontLoader)
-  createTextMiddle(scene, fontLoader)
-  createTextFirstStanza(scene, fontLoader)
-  createTextSecondStanza(scene, fontLoader)
-  createTextThirdStanza(scene, fontLoader)
-  createTextFourthStanza(scene, fontLoader)
-  createTextFifthStanza(scene, fontLoader)
-  createTextSixthStanza(scene, fontLoader)
+  createTextIntro(scene, fontLoader);
+  createTextMiddle(scene, fontLoader);
+  createTextFirstStanza(scene, fontLoader);
+  createTextSecondStanza(scene, fontLoader);
+  createTextThirdStanza(scene, fontLoader);
+  createTextFourthStanza(scene, fontLoader);
+  createTextFifthStanza(scene, fontLoader);
+  createTextSixthStanza(scene, fontLoader);
 
   createLimits(scene);
   createConveyorBelt(scene);
@@ -183,6 +183,32 @@ function init() {
     }
   );
 
+  //INJURED ROBOT
+  loader.load(
+    "/Models/walkingRobot/scene.gltf",
+    function (gltf) {
+      cameraRobot = gltf.scene;
+      // cameraRobot.position.set(0, -80, 0);
+      // cameraRobot.scale.set(10, 10, 10);
+      cameraRobot.scale.set(1.5, 1.5, 1.5);
+      // object.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
+      cameraRobot.castShadow = true;
+      cameraRobot.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+      scene.add(cameraRobot);
+      _mixerRobot = new THREE.AnimationMixer(cameraRobot);
+      _mixerRobot.clipAction(gltf.animations[0]).play();
+    },
+    // onProgress callback
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    },
+
+    // onError callback
+    function (err) {
+      console.log("An error happened");
+    }
+  );
+
   // Orbit Controls
   // controls = new OrbitControls(camera, renderer.domElement);
   // controls.dampingFactor = 0.05;
@@ -225,19 +251,24 @@ function render() {
     // Allows camera to follow designed path
     curve.getPoint((clock.getElapsedTime() * speed) % 1.0, pathTarget);
     camera.position.copy(pathTarget);
-  
-    // if (mixer) {
-    //   mixer.update(delta);
-    // }
+
+    cameraRobot.position.copy( camera.position );
+    cameraRobot.updateMatrix();
+    cameraRobot.translateZ( -100 );
+    cameraRobot.translateY( -10 );
+
+    if (_mixerRobot) {
+      _mixerRobot.update(delta);
+    }
     // console.log("Scene Polycount:", renderer.info.render.triangles);
     // console.log("Active Drawcalls:", renderer.info.render.calls);
     // console.log("Textures in Memory", renderer.info.memory.textures);
     // console.log("Geometries in Memory", renderer.info.memory.geometries);
-  
+
     mixers.forEach(function (mixer) {
       mixer.update(delta);
     });
-  
+
     _mixers.forEach(function (_mixer) {
       _mixer.update(delta);
     });

@@ -7,14 +7,14 @@ function createTextFifthStanza(scene, fontLoader) {
       "He never woke up again\nHis spark extinguished, his work undone\nHe was left alone in the cold and dark\nHis dreams and hopes forever gone\n",
       {
         height: 1,
-        size: 2,
+        size: 4,
         font: droidFont,
       }
     );
-    const textMaterialFifthStanza = new THREE.MeshBasicMaterial({ color: 0x2F4F4F});
+    const textMaterialFifthStanza = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshFifthStanza = new THREE.Mesh(textGeometryFifthStanza, textMaterialFifthStanza);
     textMeshFifthStanza.position.set(-25, -20, -2500);
-    textMeshFifthStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0);
+    textMeshFifthStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshFifthStanza);
     return textMeshFifthStanza
   });

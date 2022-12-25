@@ -1,0 +1,11 @@
+Model Information:
+* title:	Robot Puteado
+* source:	https://sketchfab.com/3d-models/robot-puteado-6e192c437d0344718240a0e04717495a
+* author:	Krlts (https://sketchfab.com/Krlts)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Robot Puteado" (https://sketchfab.com/3d-models/robot-puteado-6e192c437d0344718240a0e04717495a) by Krlts (https://sketchfab.com/Krlts) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)

@@ -7,14 +7,14 @@ function createTextSecondStanza(scene, fontLoader) {
       "He built all sorts of machines and gadgets\nEach one more intricate and complex than the last\nHe was a true master of his craft\nA genius of mechanical art\n",
       {
         height: 1,
-        size: 2,
+        size: 4,
         font: droidFont,
       }
     );
-    const textMaterialSecondStanza = new THREE.MeshBasicMaterial({ color: 0x2F4F4F});
+    const textMaterialSecondStanza = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshSecondStanza = new THREE.Mesh(textGeometrySecondStanza, textMaterialSecondStanza);
-    textMeshSecondStanza.position.set(-25, -20, -1300);
-    textMeshSecondStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0);
+    textMeshSecondStanza.position.set(25, -20, -1300);
+    textMeshSecondStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshSecondStanza);
     return textMeshSecondStanza
   });

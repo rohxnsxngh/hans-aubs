@@ -7,14 +7,14 @@ function createTextMiddle(scene, fontLoader) {
       "Well...Welcome to the Factory.\nThis is where the magic is made.\nLet me tell you a little story",
       {
         height: 1,
-        size: 2,
+        size: 4,
         font: droidFont,
       }
     );
-    const textMaterialMiddle = new THREE.MeshBasicMaterial({ color: 0x2F4F4F});
+    const textMaterialMiddle = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshMiddle = new THREE.Mesh(textGeometryMiddle, textMaterialMiddle);
-    textMeshMiddle.position.set(-25, -20, -500);
-    textMeshMiddle.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0);
+    textMeshMiddle.position.set(25, -20, -500);
+    textMeshMiddle.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshMiddle);
     return textMeshMiddle
   });

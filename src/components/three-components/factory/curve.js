@@ -7,6 +7,7 @@ function createCurve(scene) {
     new THREE.Vector3(0, -60, -1000),
     new THREE.Vector3(0, -60, -2000),
     new THREE.Vector3(0, -60, -3000),
+    new THREE.Vector3(0, -60, -4000),
   ]);
   // const speed = 0.05;
   // const pathTarget = new THREE.Vector3(0, 0, 0);

@@ -7,14 +7,14 @@ function createTextThirdStanza(scene, fontLoader) {
       "But one day, as he was working away\nHe noticed that his battery was running low\nHe tried to ignore the warning signs\nBut soon he couldn't deny it any longer,\nhe was running out of time\n",
       {
         height: 1,
-        size: 2,
+        size: 4,
         font: droidFont,
       }
     );
-    const textMaterialThirdStanza = new THREE.MeshBasicMaterial({ color: 0x2F4F4F});
+    const textMaterialThirdStanza = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshThirdStanza = new THREE.Mesh(textGeometryThirdStanza, textMaterialThirdStanza);
     textMeshThirdStanza.position.set(-25, -20, -1700);
-    textMeshThirdStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), 0);
+    textMeshThirdStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshThirdStanza);
     return textMeshThirdStanza
   });
