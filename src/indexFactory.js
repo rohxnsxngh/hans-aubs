@@ -130,15 +130,15 @@ function init() {
         }
       }
     },
-    // onProgress callback
-    function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-    },
+    // // onProgress callback
+    // function (xhr) {
+    //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    // },
 
-    // onError callback
-    function (err) {
-      console.log("An error happened");
-    }
+    // // onError callback
+    // function (err) {
+    //   console.log("An error happened");
+    // }
   );
 
   //FACTORY LINE
@@ -172,15 +172,15 @@ function init() {
         }
       }
     },
-    // onProgress callback
-    function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-    },
+    // // onProgress callback
+    // function (xhr) {
+    //   console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    // },
 
-    // onError callback
-    function (err) {
-      console.log("An error happened");
-    }
+    // // onError callback
+    // function (err) {
+    //   console.log("An error happened");
+    // }
   );
 
   //INJURED ROBOT

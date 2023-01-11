@@ -13,7 +13,7 @@ function createTextSecondStanza(scene, fontLoader) {
     );
     const textMaterialSecondStanza = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshSecondStanza = new THREE.Mesh(textGeometrySecondStanza, textMaterialSecondStanza);
-    textMeshSecondStanza.position.set(25, -20, -1300);
+    textMeshSecondStanza.position.set(25, 0, -1300);
     textMeshSecondStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshSecondStanza);
     return textMeshSecondStanza

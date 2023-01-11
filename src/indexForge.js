@@ -309,10 +309,12 @@ function init() {
     return ANALYSER;
   });
 
-  const axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
+  const geometryOrigin = new THREE.SphereGeometry(3, 32, 16);
+  const materialOrigin = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const sphereOrigin = new THREE.Mesh(geometryOrigin, materialOrigin);
+  scene.add(sphereOrigin);
 
-  axesHelper.add(sound);
+  sphereOrigin.add(sound);
 
   //Controls
   //First Person Controls
@@ -490,11 +492,6 @@ const updateGeometry = function () {
     new THREE.Uint8BufferAttribute(heights, 1)
   );
 };
-
-console.log("Scene Polycount:", renderer.info.render.triangles);
-console.log("Active Drawcalls:", renderer.info.render.calls);
-console.log("Textures in Memory", renderer.info.memory.textures);
-console.log("Geometries in Memory", renderer.info.memory.geometries);
 
 function setupGui() {
   effectController = {

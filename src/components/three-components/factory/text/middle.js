@@ -13,7 +13,7 @@ function createTextMiddle(scene, fontLoader) {
     );
     const textMaterialMiddle = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshMiddle = new THREE.Mesh(textGeometryMiddle, textMaterialMiddle);
-    textMeshMiddle.position.set(25, -20, -500);
+    textMeshMiddle.position.set(25, 0, -500);
     textMeshMiddle.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshMiddle);
     return textMeshMiddle

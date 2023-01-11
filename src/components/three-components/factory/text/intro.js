@@ -13,7 +13,7 @@ function createTextIntro(scene, fontLoader) {
     );
     const textMaterialIntro = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshIntro = new THREE.Mesh(textGeometryIntro, textMaterialIntro);
-    textMeshIntro.position.set(-25, -20, -200);
+    textMeshIntro.position.set(25, 0, -200);
     textMeshIntro.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshIntro);
     return textMeshIntro

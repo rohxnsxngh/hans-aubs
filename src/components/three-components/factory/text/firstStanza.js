@@ -13,7 +13,7 @@ function createTextFirstStanza(scene, fontLoader) {
     );
     const textMaterialFirstStanza = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshFirstStanza = new THREE.Mesh(textGeometryFirstStanza, textMaterialFirstStanza);
-    textMeshFirstStanza.position.set(-25, -20, -900);
+    textMeshFirstStanza.position.set(25, 0, -900);
     textMeshFirstStanza.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshFirstStanza);
     return textMeshFirstStanza
