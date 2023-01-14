@@ -1,29 +1,11 @@
-# Vite
+# The Forge
 
-This directory is a brief example of a Vite/Vue.js site that can be deployed to Vercel with zero configuration.
+This project is an immersive, entertaining experience that allows users to interact with dynamic and engaging visuals. It was built as a platform for experimenting with various techniques in computer graphics and audio processing, such as audio visualizers, shaders, procedural generation, and textures.
 
-While this project uses Vue.js, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+The project is built primarily with Three.js, a JavaScript library for creating and displaying 3D graphics on web browsers. The project aims to leverage the power of Three.js to create a rich, interactive and visually stunning experience for the user. It utilizes audio input to drive the animation and visuals of the scene, creating a real-time audio visualization. It also uses 3D models created in Blender and exported to be displayed in the browser.
 
-## Deploy Your Own
+Procedural generation techniques are used to create unique and varied visuals with each experience, giving the user a different experience every time. This includes generating textures and shapes, which change depending on user interaction, or with the audio input.
 
-Deploy your own Vite project with Vercel.
+The project also makes use of shaders, which are small programs that run on the graphics processing unit (GPU) to generate the final images rendered on the screen. These shaders allow for complex and dynamic visuals, such as reflections, refractions, and realistic lighting effects.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite&template=vite)
-
-_Live Example: https://vite-vue-template.vercel.app_
-
-### How We Created This Example
-
-To get started with Vue.js deployed with Vercel, you can use Vite (https://vitejs.dev/guide/#scaffolding-your-first-vite-project) to initialize the project:
-
-```shell
-$ yarn create @vitejs/app
-```
-
-### Deploying From Your Terminal
-
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
-
-```shell
-$ vercel
-```
+Finally, the project utilizes browser based technologies, the user can enjoy the immersive experience from anywhere and any device with a web browser and internet connection. The goal of the project is to provide an entertaining and engaging experience for the user, whether for entertainment or for other purposes such as gaming, music and other immersive experiences. This project is in development and has no real end goal as it's simply a method for artistic expression.
