@@ -9,3 +9,5 @@ Procedural generation techniques are used to create unique and varied visuals wi
 The project also makes use of shaders, which are small programs that run on the graphics processing unit (GPU) to generate the final images rendered on the screen. These shaders allow for complex and dynamic visuals, such as reflections, refractions, and realistic lighting effects.
 
 Finally, the project utilizes browser based technologies, the user can enjoy the immersive experience from anywhere and any device with a web browser and internet connection. The goal of the project is to provide an entertaining and engaging experience for the user, whether for entertainment or for other purposes such as gaming, music and other immersive experiences. This project is in development and has no real end goal as it's simply a method for artistic expression.
+
+Demo: https://rohxnsxngh.vercel.app/
