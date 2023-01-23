@@ -11,3 +11,9 @@ The project also makes use of shaders, which are small programs that run on the 
 Finally, the project utilizes browser based technologies, the user can enjoy the immersive experience from anywhere and any device with a web browser and internet connection. The goal of the project is to provide an entertaining and engaging experience for the user, whether for entertainment or for other purposes such as gaming, music and other immersive experiences. This project is in development and has no real end goal as it's simply a method for artistic expression.
 
 Demo: https://rohxnsxngh.vercel.app/
+
+![image](https://user-images.githubusercontent.com/98181667/213955706-874edf2c-e473-4a8f-9628-94ed5f9f71b4.png)
+
+![image](https://user-images.githubusercontent.com/98181667/213955797-577e3a85-373f-4701-a3cc-68483020fd98.png)
+
+![image](https://user-images.githubusercontent.com/98181667/213955852-f3d5121e-3fd3-43f7-8980-b8dfa2399434.png)
