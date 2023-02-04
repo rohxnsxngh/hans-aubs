@@ -24,7 +24,7 @@ function createTextIntro(scene, fontLoader) {
     side: THREE.DoubleSide,
   });
   const plane = new THREE.Mesh(geometry, material);
-  plane.position.set(-10, 25, -200);
+  plane.position.set(-10, 27, -200);
   scene.add(plane);
 }
 

@@ -27,7 +27,7 @@ function createTextMiddle(scene, fontLoader) {
     side: THREE.DoubleSide,
   });
   const plane = new THREE.Mesh(geometry, material);
-  plane.position.set(-15, 0, -500);
+  plane.position.set(-17, 0, -500);
   scene.add(plane);
 }
 
