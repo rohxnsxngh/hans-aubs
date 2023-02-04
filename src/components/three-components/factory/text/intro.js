@@ -4,20 +4,28 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createTextIntro(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryIntro = new TextGeometry(
-      "You went through\nthe portal...didn't you?",
+      "Welcome to a little about me!",
       {
         height: 1,
-        size: 4,
+        size: 6,
         font: droidFont,
       }
     );
     const textMaterialIntro = new THREE.MeshBasicMaterial({ color: 0x000000});
     const textMeshIntro = new THREE.Mesh(textGeometryIntro, textMaterialIntro);
-    textMeshIntro.position.set(25, 0, -200);
+    textMeshIntro.position.set(50, 25, -200);
     textMeshIntro.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
     scene.add(textMeshIntro);
     return textMeshIntro
   });
+  const geometry = new THREE.PlaneGeometry(155, 25);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffff00,
+    side: THREE.DoubleSide,
+  });
+  const plane = new THREE.Mesh(geometry, material);
+  plane.position.set(-10, 25, -200);
+  scene.add(plane);
 }
 
 export { createTextIntro };
