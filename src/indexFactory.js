@@ -50,9 +50,11 @@ function init() {
     powerPreference: "high-performance",
   });
   renderer.setPixelRatio(window.devicePixelRatio);
+
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // renderer.outputEncoding = THREE.sRGBEncoding;
-  // renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  // renderer.shadowMap = THREE.PCFShadowMap
   container.appendChild(renderer.domElement);
 
   //LIGHT
@@ -70,7 +72,7 @@ function init() {
   //FOG
   const color = 0xffffff;
   const near = 10;
-  const far = 650;
+  const far = 800;
   scene.fog = new THREE.Fog(color, near, far);
 
   //ORIGIN

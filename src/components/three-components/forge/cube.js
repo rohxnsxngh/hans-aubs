@@ -4,13 +4,15 @@ function createCube(scene) {
   // CUBE
   const color = new THREE.Color();
   const amount = parseInt(window.location.search.slice(1)) || 5;
-  const count = Math.pow(amount, 3);
-  const geometryCube = new THREE.IcosahedronGeometry(0.5, 3);
+  const count = Math.pow(amount, 5);
+  const geometryCube = new THREE.IcosahedronGeometry(0.25, 3);
   const materialCube = new THREE.MeshPhongMaterial({
-    color: 0x5700E6,
+    color: 0x5700E6, //0x5700E6
     emissive: 0x000000,
     specular: 0xffffff,
-    shininess: 30,
+    shininess: 15,
+    // depthTest: false,
+    // depthWrite: false,
   });
 
   const meshCube = new THREE.InstancedMesh(geometryCube, materialCube, count);

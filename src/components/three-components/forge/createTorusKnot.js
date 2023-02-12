@@ -5,15 +5,16 @@ function createTorusKnot(scene) {
   const material = new THREE.MeshPhongMaterial({
     color: 0x000000,
     emissive: 0x000000, //change color
-    specular: 0xEB00D5,
+    specular: 0xffffff, //0xEB00D5
     shininess: 15,
+    flatShading: true,
   });
   const torusKnot = new THREE.Mesh(geometry, material);
   torusKnot.scale.set(50, 50, 50);
   torusKnot.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
   torusKnot.position.set(-500, 100, -300);
   scene.add(torusKnot);
-  return torusKnot
+  return torusKnot;
 }
 
 export { createTorusKnot };

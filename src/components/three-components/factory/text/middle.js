@@ -23,8 +23,10 @@ function createTextMiddle(scene, fontLoader) {
   });
   const geometry = new THREE.PlaneGeometry(145, 75);
   const material = new THREE.MeshBasicMaterial({
-    color: 0xffff00,
+    color: 0xffffff,
     side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.25,
   });
   const plane = new THREE.Mesh(geometry, material);
   plane.position.set(-17, 0, -500);

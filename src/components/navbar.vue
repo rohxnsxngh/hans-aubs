@@ -3,7 +3,7 @@
     <div
       v-if="!isStarted"
       id="navbar"
-      class="bg-gray-700 ease-in-out p-4 opacity-95 h-[70rem] w-full justify-center duration-700"
+      class="bg-gray-700 ease-in-out p-4 opacity-95 h-[100rem] w-full justify-center duration-700"
     >
       <div>
         <div class="columns-2">
