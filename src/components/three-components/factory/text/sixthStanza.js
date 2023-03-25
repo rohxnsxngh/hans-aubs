@@ -4,7 +4,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createTextSixthStanza(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometrySixthStanza = new TextGeometry(
-      "No one knew what had happened to him\nHe was just another missing robot in the end\nHis workshop was left abandoned and forgotten\nHis legacy lost, his spirit dead.\n",
+      "THE END",
       {
         height: 1,
         size: 4,
