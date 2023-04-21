@@ -4,7 +4,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 function createTextFourthStanza(scene, fontLoader) {
   fontLoader.load("/Fonts/Droid_Serif_Regular.json", (droidFont) => {
     const textGeometryFourthStanza = new TextGeometry(
-      "In addition to sports, I also have a love for creating art. Whether it's painting, sketching, or sculpting, I find art to be a wonderful form of self-expression and a way to unleash my creativity. I enjoy exploring new mediums and techniques, and I find that the process of creating something from scratch is incredibly rewarding.",
+      "In addition to sports, I also have a love \nfor creating art. Whether it's painting, sketching, \nor computer aided design, I find art to be \na wonderful form of self-expression and a way \nto unleash my creativity. I enjoy exploring new \nmediums and techniques, and I find that the \nprocess of creating something from scratch \nis incredibly rewarding.",
       {
         height: 1,
         size: 4,
@@ -18,6 +18,16 @@ function createTextFourthStanza(scene, fontLoader) {
     scene.add(textMeshFourthStanza);
     return textMeshFourthStanza
   });
+  const geometry = new THREE.PlaneGeometry(160, 75);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.25,
+  });
+  const plane = new THREE.Mesh(geometry, material);
+  plane.position.set(-17, 0, -2100);
+  scene.add(plane);
 }
 
 export { createTextFourthStanza };

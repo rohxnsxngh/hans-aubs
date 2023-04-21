@@ -18,7 +18,7 @@ function createTextSecondStanza(scene, fontLoader) {
     scene.add(textMeshSecondStanza);
     return textMeshSecondStanza
   });
-  const geometry = new THREE.PlaneGeometry(160, 75);
+  const geometry = new THREE.PlaneGeometry(160, 80);
   const material = new THREE.MeshBasicMaterial({
     color: 0xffffff,
     side: THREE.DoubleSide,

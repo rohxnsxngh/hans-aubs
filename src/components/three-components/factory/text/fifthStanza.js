@@ -18,6 +18,16 @@ function createTextFifthStanza(scene, fontLoader) {
     scene.add(textMeshFifthStanza);
     return textMeshFifthStanza
   });
+  const geometry = new THREE.PlaneGeometry(160, 75);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.25,
+  });
+  const plane = new THREE.Mesh(geometry, material);
+  plane.position.set(-17, 0, -2500);
+  scene.add(plane);
 }
 
 export { createTextFifthStanza };
