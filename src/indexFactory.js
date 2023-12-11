@@ -81,14 +81,14 @@ function init() {
 
   //FONT
   fontLoader = new FontLoader();
-  createTextIntro(scene, fontLoader);
-  createTextMiddle(scene, fontLoader);
-  createTextFirstStanza(scene, fontLoader);
-  createTextSecondStanza(scene, fontLoader);
-  createTextThirdStanza(scene, fontLoader);
-  createTextFourthStanza(scene, fontLoader);
-  createTextFifthStanza(scene, fontLoader);
-  createTextSixthStanza(scene, fontLoader);
+  // createTextIntro(scene, fontLoader);
+  // createTextMiddle(scene, fontLoader);
+  // createTextFirstStanza(scene, fontLoader);
+  // createTextSecondStanza(scene, fontLoader);
+  // createTextThirdStanza(scene, fontLoader);
+  // createTextFourthStanza(scene, fontLoader);
+  // createTextFifthStanza(scene, fontLoader);
+  // createTextSixthStanza(scene, fontLoader);
 
   createLimits(scene);
   createConveyorBelt(scene);
